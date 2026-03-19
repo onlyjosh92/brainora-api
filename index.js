@@ -6,22 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
-```
 
-8. Baja hasta abajo de la página y verás un botón verde que dice **"Commit changes"**. Pulsa ese botón.
-9. Aparece una ventana. Deja todo como está y pulsa el botón verde **"Commit changes"** otra vez.
-
-**Crear la carpeta public y subir el HTML:**
-
-1. Vuelve a la página principal de tu repositorio
-2. Pulsa **"Add file"** → **"Upload files"**
-3. Antes de subir el archivo, escribe en el campo que aparece arriba: `public/brainora.html`  — esto crea la carpeta automáticamente
-4. Arrastra o selecciona tu archivo `brainora.html`
-5. Pulsa **"Commit changes"**
-
-Render detectará los cambios y redespleguará automáticamente en 1-2 minutos. Cuando termine, abre:
-```
-https://brainora-api.onrender.com/brainora.html
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 app.get('/health', (req, res) => {
