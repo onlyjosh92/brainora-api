@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #08080e; --surface: #111118; --surface2: #18181f; --surface3: #1f1f28;
+    --bg: #08080e; --surface: #111118; --surface2: #18181f;
     --accent: #c8a96e; --accent2: #7b6cff; --accent3: #4ecdc4;
     --text: #ede9e0; --muted: #5a596a; --muted2: #3a3948;
     --correct: #4ecdc4; --wrong: #ff5c7a; --radius: 18px; --radius-sm: 10px;
@@ -45,11 +45,6 @@
   .play-btn { width: 100%; padding: 19px; background: linear-gradient(135deg, #c8a96e 0%, #a08aff 100%); border: none; border-radius: var(--radius); font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; letter-spacing: 1px; color: #08080e; cursor: pointer; transition: opacity .2s, transform .15s; margin-top: auto; }
   .play-btn:hover { opacity: .92; transform: scale(1.01); }
   .play-btn:active { transform: scale(0.98); }
-  .loading-screen { align-items: center; justify-content: center; gap: 28px; min-height: 100vh; }
-  .loader-ring { width: 64px; height: 64px; border: 2px solid rgba(200,169,110,0.15); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-brand { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #c8a96e 30%, #a08aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .loading-sub { font-size: 13px; color: var(--muted); text-align: center; }
   .quiz-nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0 16px; }
   .q-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
   .q-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--accent); }
@@ -111,6 +106,7 @@
 <div class="glow-1"></div>
 <div class="glow-2"></div>
 <div class="app">
+
   <div class="screen active" id="screen-home">
     <div class="home-hero">
       <svg class="cat-mascot" viewBox="0 0 148 148" xmlns="http://www.w3.org/2000/svg">
@@ -169,22 +165,22 @@
     </div>
     <span class="section-label">Categoría</span>
     <div class="categories">
-      <button class="cat-btn active" data-cat="Cultura General">🌍 General</button>
-      <button class="cat-btn" data-cat="Historia">🏛️ Historia</button>
-      <button class="cat-btn" data-cat="Ciencia">🔬 Ciencia</button>
-      <button class="cat-btn" data-cat="Geografía">🗺️ Geografía</button>
-      <button class="cat-btn" data-cat="Deportes">⚽ Deportes</button>
-      <button class="cat-btn" data-cat="Cine y TV">🎬 Cine</button>
-      <button class="cat-btn" data-cat="Música">🎵 Música</button>
-      <button class="cat-btn" data-cat="Tecnología">💻 Tecnología</button>
+      <button class="cat-btn active" data-cat="general">🌍 General</button>
+      <button class="cat-btn" data-cat="historia">🏛️ Historia</button>
+      <button class="cat-btn" data-cat="ciencia">🔬 Ciencia</button>
+      <button class="cat-btn" data-cat="geografia">🗺️ Geografía</button>
+      <button class="cat-btn" data-cat="deportes">⚽ Deportes</button>
+      <button class="cat-btn" data-cat="cine">🎬 Cine</button>
+      <button class="cat-btn" data-cat="musica">🎵 Música</button>
+      <button class="cat-btn" data-cat="tecnologia">💻 Tecnología</button>
+      <button class="cat-btn" data-cat="arte">🎨 Arte</button>
+      <button class="cat-btn" data-cat="naturaleza">🌿 Naturaleza</button>
+      <button class="cat-btn" data-cat="gastronomia">🍽️ Gastronomía</button>
+      <button class="cat-btn" data-cat="mitologia">⚡ Mitología</button>
     </div>
     <button class="play-btn" onclick="startQuiz()">▶ Comenzar desafío</button>
   </div>
-  <div class="screen loading-screen" id="screen-loading">
-    <div class="loader-ring"></div>
-    <div class="loading-brand">Brainora</div>
-    <div class="loading-sub" id="loading-sub">La IA está generando tus preguntas...</div>
-  </div>
+
   <div class="screen" id="screen-quiz">
     <div class="quiz-nav">
       <div><div class="q-label">Pregunta</div><div class="q-num" id="q-num">1 / 10</div></div>
@@ -199,6 +195,7 @@
     <div class="options" id="options"></div>
     <div class="explanation" id="explanation"></div>
   </div>
+
   <div class="screen results-screen" id="screen-results">
     <div class="result-brand">Brainora</div>
     <div class="result-score" id="res-score">0</div>
@@ -213,32 +210,677 @@
     <button class="ghost-btn" onclick="showScreen('screen-ranking')">🏆 Ver ranking global</button>
     <button class="primary-btn" onclick="showScreen('screen-home')">↺ Volver al inicio</button>
   </div>
+
   <div class="screen ranking-screen" id="screen-ranking">
     <div class="ranking-title">Ranking</div>
     <div class="ranking-sub" id="ranking-date"></div>
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('global', this)">Global</button>
-      <button class="tab-btn" onclick="switchTab('hoy', this)">Hoy</button>
+      <button class="tab-btn active" onclick="switchTab('global',this)">Global</button>
+      <button class="tab-btn" onclick="switchTab('hoy',this)">Hoy</button>
     </div>
     <div class="rank-list" id="rank-list"><div class="rank-empty">Cargando...</div></div>
     <button class="back-btn" onclick="showScreen('screen-home')">← Volver al inicio</button>
   </div>
+
 </div>
 <div class="toast" id="toast"></div>
 <script>
 const API_URL = 'https://brainora-api.onrender.com';
+
+const DB = {
+  general: [
+    {q:"¿Cuál es el país más grande del mundo por superficie?",opts:["Canadá","Rusia","China","Estados Unidos"],ans:1,exp:"Rusia ocupa más de 17 millones de km²."},
+    {q:"¿Cuántos huesos tiene el cuerpo humano adulto?",opts:["206","250","312","180"],ans:0,exp:"Los bebés nacen con más de 300 huesos que se fusionan hasta llegar a 206."},
+    {q:"¿Qué idioma tiene más hablantes nativos?",opts:["Inglés","Español","Chino mandarín","Hindi"],ans:2,exp:"El mandarín tiene más de 900 millones de hablantes nativos."},
+    {q:"¿En qué año llegó el hombre a la Luna?",opts:["1965","1967","1969","1971"],ans:2,exp:"El Apollo 11 aterrizó el 20 de julio de 1969."},
+    {q:"¿Cuál es el océano más grande?",opts:["Atlántico","Índico","Ártico","Pacífico"],ans:3,exp:"El Pacífico cubre más de 165 millones de km²."},
+    {q:"¿Cuál es el elemento más abundante en el universo?",opts:["Oxígeno","Helio","Hidrógeno","Carbono"],ans:2,exp:"El hidrógeno constituye el 75% de la materia del universo."},
+    {q:"¿Qué animal tiene la gestación más larga?",opts:["Elefante africano","Ballena azul","Jirafa","Rinoceronte"],ans:0,exp:"La elefanta africana tiene una gestación de unos 22 meses."},
+    {q:"¿Cuál es la moneda oficial de Japón?",opts:["Yuan","Won","Yen","Ringgit"],ans:2,exp:"El yen japonés (¥) es la moneda oficial de Japón."},
+    {q:"¿A qué velocidad viaja la luz en el vacío?",opts:["200.000 km/s","299.792 km/s","350.000 km/s","150.000 km/s"],ans:1,exp:"La velocidad de la luz es exactamente 299.792 km/s."},
+    {q:"¿Cuántos planetas tiene el sistema solar?",opts:["7","8","9","10"],ans:1,exp:"Desde 2006, cuando Plutón fue reclasificado, hay 8 planetas."},
+    {q:"¿Qué instrumento mide los terremotos?",opts:["Barómetro","Sismógrafo","Termómetro","Higrómetro"],ans:1,exp:"El sismógrafo registra las ondas sísmicas de los terremotos."},
+    {q:"¿Cuál es el animal terrestre más rápido?",opts:["León","Guepardo","Antílope","Caballo"],ans:1,exp:"El guepardo alcanza los 120 km/h en distancias cortas."},
+    {q:"¿Cuántos colores tiene el arcoíris?",opts:["5","6","7","8"],ans:2,exp:"El arcoíris tiene 7 colores: rojo, naranja, amarillo, verde, azul, añil y violeta."},
+    {q:"¿Cuál es el metal más caro del mundo?",opts:["Oro","Platino","Rodio","Paladio"],ans:2,exp:"El rodio es el metal más caro, utilizado en catalizadores de automóviles."},
+    {q:"¿Cuántos lados tiene un hexágono?",opts:["5","6","7","8"],ans:1,exp:"Un hexágono tiene 6 lados y 6 ángulos."},
+    {q:"¿Cuál es el río más largo de Europa?",opts:["Danubio","Rin","Volga","Támesis"],ans:2,exp:"El Volga, con 3.530 km, es el río más largo de Europa."},
+    {q:"¿Qué país tiene más islas del mundo?",opts:["Indonesia","Filipinas","Suecia","Noruega"],ans:2,exp:"Suecia tiene más de 220.000 islas registradas."},
+    {q:"¿Cuántos gramos tiene una libra?",opts:["350g","453g","500g","400g"],ans:1,exp:"Una libra equivale a 453,59 gramos."},
+    {q:"¿Qué planeta es el más grande del sistema solar?",opts:["Saturno","Neptuno","Urano","Júpiter"],ans:3,exp:"Júpiter es el planeta más grande, con 11 veces el diámetro de la Tierra."},
+    {q:"¿En qué continente está Egipto?",opts:["Asia","Europa","África","Oriente Medio"],ans:2,exp:"Egipto está en el noreste de África, aunque parte del Sinaí es técnicamente Asia."},
+    {q:"¿Cuál es la capital de Canadá?",opts:["Toronto","Montreal","Vancouver","Ottawa"],ans:3,exp:"Ottawa es la capital de Canadá desde 1857."},
+    {q:"¿Cuántos segundos tiene una hora?",opts:["3.200","3.600","4.000","2.400"],ans:1,exp:"Una hora tiene 60 minutos × 60 segundos = 3.600 segundos."},
+    {q:"¿Qué gas respiramos principalmente?",opts:["Oxígeno","Dióxido de carbono","Nitrógeno","Argón"],ans:2,exp:"El aire es 78% nitrógeno y solo 21% oxígeno."},
+    {q:"¿Cuál es el país más poblado del mundo?",opts:["India","China","Estados Unidos","Indonesia"],ans:0,exp:"India superó a China en 2023 como el país más poblado del mundo."},
+    {q:"¿A cuántos grados Fahrenheit equivalen 100°C?",opts:["180°F","212°F","220°F","200°F"],ans:1,exp:"100°C equivalen a 212°F, que es el punto de ebullición del agua."},
+    {q:"¿Cuántas horas tiene una semana?",opts:["148","168","156","172"],ans:1,exp:"Una semana tiene 7 días × 24 horas = 168 horas."},
+    {q:"¿Cuál es el idioma más hablado en Brasil?",opts:["Español","Inglés","Portugués","Guaraní"],ans:2,exp:"Brasil fue colonia portuguesa, por eso el portugués es su idioma oficial."},
+    {q:"¿Qué continente tiene más países?",opts:["Asia","América","Europa","África"],ans:3,exp:"África tiene 54 países reconocidos, más que cualquier otro continente."},
+    {q:"¿Cuál es la montaña más alta de Europa?",opts:["Mont Blanc","Cervino","Monte Rosa","Elbrus"],ans:3,exp:"El Elbrus, en el Cáucaso ruso, tiene 5.642 metros."},
+    {q:"¿Qué ocurre cada 4 años en el calendario?",opts:["Eclipse solar","Año bisiesto","Solsticio doble","Superluna"],ans:1,exp:"El año bisiesto tiene 366 días para compensar las 6 horas extra anuales."},
+    {q:"¿Cuál es el lago más profundo del mundo?",opts:["Lago Titicaca","Lago Victoria","Lago Baikal","Lago Superior"],ans:2,exp:"El lago Baikal en Siberia tiene 1.642 metros de profundidad."},
+    {q:"¿Cuántos países hay en la Unión Europea?",opts:["25","27","30","28"],ans:1,exp:"La UE tiene 27 países miembros desde que Reino Unido salió en 2020."},
+    {q:"¿Qué tipo de estrella es el Sol?",opts:["Gigante roja","Enana blanca","Enana amarilla","Supernova"],ans:2,exp:"El Sol es una enana amarilla de tipo G en la secuencia principal."},
+    {q:"¿Cuántos dientes tiene un adulto sano?",opts:["28","30","32","34"],ans:2,exp:"Los adultos tienen 32 dientes incluyendo las cuatro muelas del juicio."},
+    {q:"¿Cuál es la capital de Brasil?",opts:["São Paulo","Río de Janeiro","Salvador","Brasilia"],ans:3,exp:"Brasilia es la capital de Brasil desde 1960, diseñada por Lúcio Costa."},
+    {q:"¿Qué moneda usa el Reino Unido?",opts:["Euro","Corona","Libra esterlina","Franco"],ans:2,exp:"El Reino Unido usa la libra esterlina (£), una de las monedas más antiguas del mundo."},
+    {q:"¿Cuántos husos horarios tiene Rusia?",opts:["9","11","13","15"],ans:1,exp:"Rusia abarca 11 husos horarios, más que cualquier otro país."},
+    {q:"¿Cuál es el desierto más grande de África?",opts:["Kalahari","Namib","Sahara","Danakil"],ans:2,exp:"El Sahara es el mayor desierto cálido del mundo con 9 millones de km²."},
+    {q:"¿En qué hemisferio está Australia?",opts:["Norte","Sur","Ambos","Este"],ans:1,exp:"Australia está completamente en el hemisferio sur."},
+    {q:"¿Cuántas patas tiene una araña?",opts:["6","8","10","12"],ans:1,exp:"Las arañas son arácnidos y tienen 8 patas, a diferencia de los insectos que tienen 6."},
+    {q:"¿Cuál es el punto de congelación del agua?",opts:["0°C","-4°C","4°C","-2°C"],ans:0,exp:"El agua se congela a 0°C a presión atmosférica normal."},
+    {q:"¿Qué país tiene la bandera con el dragón?",opts:["China","Japón","Bután","Nepal"],ans:2,exp:"Bután tiene un dragón blanco en su bandera, llamado Druk."},
+    {q:"¿Cuántos jugadores forman un equipo de voleibol?",opts:["5","6","7","8"],ans:1,exp:"Un equipo de voleibol tiene 6 jugadores en el campo."},
+    {q:"¿Cuál es el ave más grande del mundo?",opts:["Avestruz","Emú","Cóndor","Albatros"],ans:0,exp:"El avestruz es el ave más grande y pesada del mundo, aunque no puede volar."},
+    {q:"¿Cuántos kilómetros tiene una milla náutica?",opts:["1,609 km","1,852 km","2,000 km","1,500 km"],ans:1,exp:"Una milla náutica equivale a 1,852 kilómetros."},
+    {q:"¿Qué planeta tiene los anillos más vistosos?",opts:["Júpiter","Urano","Neptuno","Saturno"],ans:3,exp:"Saturno tiene los anillos más espectaculares del sistema solar, compuestos de hielo y roca."},
+    {q:"¿Cuántos huesos tiene la columna vertebral humana?",opts:["24","26","33","30"],ans:2,exp:"La columna vertebral tiene 33 vértebras: 7 cervicales, 12 torácicas, 5 lumbares, 5 sacras y 4 coccígeas."},
+    {q:"¿Cuál es el país con más premios Nobel?",opts:["Alemania","Reino Unido","Francia","Estados Unidos"],ans:3,exp:"Estados Unidos lidera con más de 400 premios Nobel, seguido de Reino Unido."},
+    {q:"¿Qué país produce más café?",opts:["Colombia","Vietnam","Brasil","Etiopía"],ans:2,exp:"Brasil produce más de un tercio del café mundial."},
+    {q:"¿Cuántas estrellas tiene la bandera de EE.UU.?",opts:["48","50","52","51"],ans:1,exp:"La bandera de Estados Unidos tiene 50 estrellas, una por cada estado."},
+  ],
+  historia: [
+    {q:"¿En qué año cayó el Imperio Romano de Occidente?",opts:["476 d.C.","395 d.C.","410 d.C.","527 d.C."],ans:0,exp:"En 476 d.C. Rómulo Augústulo fue depuesto por Odoacro."},
+    {q:"¿En qué año comenzó la Primera Guerra Mundial?",opts:["1912","1914","1916","1918"],ans:1,exp:"Comenzó en 1914 tras el asesinato del archiduque Francisco Fernando."},
+    {q:"¿Qué civilización construyó Machu Picchu?",opts:["Maya","Azteca","Inca","Olmeca"],ans:2,exp:"Machu Picchu fue construida por los incas alrededor del siglo XV."},
+    {q:"¿En qué año se publicó el Manifiesto Comunista?",opts:["1844","1848","1852","1867"],ans:1,exp:"Marx y Engels lo publicaron en febrero de 1848."},
+    {q:"¿Quién conquistó el Imperio Azteca?",opts:["Francisco Pizarro","Hernán Cortés","Diego de Almagro","Pedro de Alvarado"],ans:1,exp:"Hernán Cortés conquistó Tenochtitlán en 1521."},
+    {q:"¿En qué año terminó la Segunda Guerra Mundial en Europa?",opts:["1943","1944","1945","1946"],ans:2,exp:"Alemania se rindió el 8 de mayo de 1945 (V-E Day)."},
+    {q:"¿Qué faraón ordenó construir la Gran Pirámide?",opts:["Ramsés II","Tutankamón","Keops","Nefertiti"],ans:2,exp:"La Gran Pirámide fue construida por Keops alrededor del 2560 a.C."},
+    {q:"¿En qué año se firmó la Carta Magna?",opts:["1066","1215","1348","1485"],ans:1,exp:"La Carta Magna fue firmada por el rey Juan I de Inglaterra en 1215."},
+    {q:"¿En qué año llegó Cristóbal Colón a América?",opts:["1488","1490","1492","1498"],ans:2,exp:"Colón llegó a las Bahamas el 12 de octubre de 1492."},
+    {q:"¿Cuál fue la primera nación en conceder el voto a las mujeres?",opts:["Australia","Nueva Zelanda","Finlandia","Noruega"],ans:1,exp:"Nueva Zelanda concedió el voto a las mujeres en 1893."},
+    {q:"¿Quién fue el primer emperador de Roma?",opts:["Julio César","Augusto","Nerón","Calígula"],ans:1,exp:"Augusto (Octavio) fue el primer emperador de Roma desde el 27 a.C."},
+    {q:"¿En qué año se produjo la Revolución Francesa?",opts:["1776","1789","1799","1804"],ans:1,exp:"La Revolución Francesa comenzó en 1789 con la toma de la Bastilla."},
+    {q:"¿Qué cultura construyó el Coliseo de Roma?",opts:["Griega","Etrusca","Romana","Bizantina"],ans:2,exp:"El Coliseo fue construido por los romanos entre el 70 y el 80 d.C."},
+    {q:"¿En qué año se abolió la esclavitud en Estados Unidos?",opts:["1860","1863","1865","1870"],ans:2,exp:"La 13ª Enmienda abolió la esclavitud en 1865, al final de la Guerra Civil."},
+    {q:"¿Quién fue el último zar de Rusia?",opts:["Alejandro III","Nicolás I","Nicolás II","Alejandro II"],ans:2,exp:"Nicolás II fue el último zar, abdicó en 1917 y fue ejecutado en 1918."},
+    {q:"¿En qué año se inauguró el Canal de Suez?",opts:["1859","1869","1879","1889"],ans:1,exp:"El Canal de Suez fue inaugurado en 1869 conectando el Mediterráneo con el Mar Rojo."},
+    {q:"¿Qué batalla puso fin a las guerras napoleónicas?",opts:["Austerlitz","Leipzig","Waterloo","Trafalgar"],ans:2,exp:"La batalla de Waterloo en 1815 supuso la derrota definitiva de Napoleón."},
+    {q:"¿En qué año se fundó la ONU?",opts:["1943","1945","1947","1950"],ans:1,exp:"La ONU fue fundada el 24 de octubre de 1945 tras la Segunda Guerra Mundial."},
+    {q:"¿Quién fue el primer presidente de Estados Unidos?",opts:["John Adams","Thomas Jefferson","Benjamin Franklin","George Washington"],ans:3,exp:"George Washington fue el primer presidente de EE.UU. desde 1789 hasta 1797."},
+    {q:"¿En qué año cayó el Muro de Berlín?",opts:["1987","1988","1989","1990"],ans:2,exp:"El Muro de Berlín cayó el 9 de noviembre de 1989."},
+    {q:"¿Qué imperio fue el más extenso de la historia?",opts:["Romano","Mongol","Británico","Español"],ans:2,exp:"El Imperio Británico fue el más extenso de la historia, abarcando el 24% de la superficie terrestre."},
+    {q:"¿En qué siglo vivió Leonardo da Vinci?",opts:["XIV","XV","XVI","XVII"],ans:1,exp:"Leonardo da Vinci vivió entre 1452 y 1519, en el Renacimiento italiano."},
+    {q:"¿Qué civilización inventó el papel?",opts:["Egipcia","Romana","China","Árabe"],ans:2,exp:"Los chinos inventaron el papel alrededor del año 105 d.C."},
+    {q:"¿En qué año fue asesinado Julio César?",opts:["55 a.C.","44 a.C.","30 a.C.","48 a.C."],ans:1,exp:"Julio César fue asesinado el 15 de marzo del 44 a.C. en el Senado romano."},
+    {q:"¿Quién escribió 'El Quijote'?",opts:["Lope de Vega","Francisco de Quevedo","Miguel de Cervantes","Góngora"],ans:2,exp:"Miguel de Cervantes publicó la primera parte de El Quijote en 1605."},
+    {q:"¿En qué año se independizó Estados Unidos?",opts:["1774","1776","1778","1783"],ans:1,exp:"La Declaración de Independencia fue firmada el 4 de julio de 1776."},
+    {q:"¿Qué pueblo construyó Stonehenge?",opts:["Celtas","Romanos","Vikingos","Cultura del vaso campaniforme"],ans:3,exp:"Stonehenge fue construido por culturas neolíticas y de la Edad de Bronce, entre 3000 y 1500 a.C."},
+    {q:"¿En qué año comenzó la Guerra Fría?",opts:["1945","1947","1950","1953"],ans:1,exp:"La Guerra Fría se considera que comenzó en 1947 con la Doctrina Truman."},
+    {q:"¿Quién fue el primer hombre en volar en avión?",opts:["Charles Lindbergh","Orville Wright","Wilbur Wright","Louis Blériot"],ans:1,exp:"Orville Wright realizó el primer vuelo motorizado el 17 de diciembre de 1903."},
+    {q:"¿En qué país se originó el Imperio Otomano?",opts:["Persia","Arabia","Turquía","Egipto"],ans:2,exp:"El Imperio Otomano se originó en Anatolia (actual Turquía) en el siglo XIII."},
+    {q:"¿Qué acontecimiento inició la Primera Guerra Mundial?",opts:["Invasión de Polonia","Atentado de Sarajevo","Crisis de los Balcanes","Tensión colonial"],ans:1,exp:"El asesinato del archiduque Francisco Fernando en Sarajevo en 1914 detonó la guerra."},
+    {q:"¿En qué año se produjo la Revolución Rusa?",opts:["1915","1916","1917","1918"],ans:2,exp:"La Revolución Rusa de octubre de 1917 llevó a los bolcheviques al poder."},
+    {q:"¿Quién lideró la independencia de la India?",opts:["Nehru","Gandhi","Bose","Ambedkar"],ans:1,exp:"Mahatma Gandhi lideró el movimiento de independencia con su filosofía de no violencia."},
+    {q:"¿En qué año se lanzaron las bombas atómicas sobre Japón?",opts:["1944","1945","1946","1943"],ans:1,exp:"Las bombas atómicas fueron lanzadas sobre Hiroshima y Nagasaki en agosto de 1945."},
+    {q:"¿Qué civilización antigua vivió en Mesopotamia?",opts:["Egipcia","Sumeria","Maya","Persa"],ans:1,exp:"Los sumerios fueron una de las primeras civilizaciones en Mesopotamia, actual Irak."},
+    {q:"¿Cuánto duró la Guerra de los Cien Años?",opts:["100 años","116 años","89 años","120 años"],ans:1,exp:"La Guerra de los Cien Años duró 116 años, de 1337 a 1453."},
+    {q:"¿En qué año se completó la Gran Muralla China?",opts:["Siglo III a.C.","Siglo XIV","Siglo XVI","Siglo X"],ans:2,exp:"La Gran Muralla en su forma actual fue completada principalmente durante la dinastía Ming en el siglo XVI."},
+    {q:"¿Quién fue el líder nazi durante la Segunda Guerra Mundial?",opts:["Himmler","Göring","Goebbels","Hitler"],ans:3,exp:"Adolf Hitler fue el canciller y Führer de Alemania desde 1933 hasta 1945."},
+    {q:"¿En qué año se descubrió América según los europeos?",opts:["1490","1491","1492","1493"],ans:2,exp:"Cristóbal Colón llegó al continente americano el 12 de octubre de 1492."},
+    {q:"¿Qué rey inglés tuvo seis esposas?",opts:["Eduardo VI","Enrique VII","Enrique VIII","Carlos I"],ans:2,exp:"Enrique VIII tuvo seis esposas: Catalina de Aragón, Ana Bolena, Juana Seymour, Ana de Cléveris, Catalina Howard y Catalina Parr."},
+    {q:"¿En qué año se produjo el hundimiento del Titanic?",opts:["1910","1911","1912","1913"],ans:2,exp:"El Titanic se hundió el 15 de abril de 1912 en su viaje inaugural."},
+    {q:"¿Qué guerra enfrentó a Norte y Sur en Estados Unidos?",opts:["Guerra de Independencia","Guerra Hispano-Americana","Guerra de 1812","Guerra Civil"],ans:3,exp:"La Guerra Civil Americana (1861-1865) enfrentó a los estados del Norte y del Sur."},
+    {q:"¿Quién fue Cleopatra?",opts:["Reina de Egipto","Emperatriz romana","Reina de Grecia","Diosa egipcia"],ans:0,exp:"Cleopatra VII fue la última reina faraónica del Antiguo Egipto."},
+    {q:"¿En qué año se fundó Roma?",opts:["753 a.C.","509 a.C.","264 a.C.","27 a.C."],ans:0,exp:"Según la tradición, Roma fue fundada en el 753 a.C. por Rómulo."},
+    {q:"¿Qué tratado puso fin a la Primera Guerra Mundial?",opts:["Tratado de París","Tratado de Versalles","Tratado de Utrecht","Tratado de Westfalia"],ans:1,exp:"El Tratado de Versalles, firmado en 1919, puso fin oficialmente a la Primera Guerra Mundial."},
+    {q:"¿En qué siglo vivió Napoleón Bonaparte?",opts:["XVII","XVIII","XIX","XVIII-XIX"],ans:3,exp:"Napoleón vivió entre 1769 y 1821, activo principalmente entre finales del XVIII y principios del XIX."},
+    {q:"¿Qué pueblo construyó el Partenón?",opts:["Romanos","Griegos","Persas","Espartanos"],ans:1,exp:"El Partenón fue construido por los atenienses entre el 447 y el 432 a.C."},
+    {q:"¿En qué año se abolió la esclavitud en España?",opts:["1870","1873","1880","1886"],ans:3,exp:"España abolió la esclavitud en Cuba en 1886, siendo una de las últimas potencias en hacerlo."},
+    {q:"¿Quién fue el primer secretario general de la ONU?",opts:["Dag Hammarskjöld","Trygve Lie","U Thant","Kurt Waldheim"],ans:1,exp:"Trygve Lie, diplomático noruego, fue el primer Secretario General desde 1946."},
+    {q:"¿Qué ciudad fue la capital del Imperio Azteca?",opts:["Chichén Itzá","Teotihuacán","Tenochtitlán","Tlaxcala"],ans:2,exp:"Tenochtitlán, en el actual México D.F., fue la capital del Imperio Azteca."},
+    {q:"¿En qué año comenzó la Segunda Guerra Mundial?",opts:["1937","1938","1939","1940"],ans:2,exp:"La Segunda Guerra Mundial comenzó el 1 de septiembre de 1939 con la invasión alemana de Polonia."},
+  ],
+  ciencia: [
+    {q:"¿Cuál es la fórmula química del agua?",opts:["HO","H2O","H3O","OH2"],ans:1,exp:"El agua tiene dos átomos de hidrógeno y uno de oxígeno."},
+    {q:"¿Qué científico formuló la teoría de la relatividad?",opts:["Newton","Bohr","Einstein","Planck"],ans:2,exp:"Einstein publicó la relatividad especial en 1905 y la general en 1915."},
+    {q:"¿Cuántos cromosomas tiene una célula humana normal?",opts:["23","44","46","48"],ans:2,exp:"Las células humanas tienen 46 cromosomas en 23 pares."},
+    {q:"¿Qué gas produce el efecto invernadero principalmente?",opts:["Oxígeno","Nitrógeno","CO2","Hidrógeno"],ans:2,exp:"El CO2 es el principal gas de efecto invernadero de origen humano."},
+    {q:"¿Cuál es el número atómico del oro?",opts:["47","79","82","92"],ans:1,exp:"El oro (Au) tiene número atómico 79."},
+    {q:"¿Qué parte del cerebro controla el equilibrio?",opts:["Hipocampo","Cerebelo","Hipotálamo","Amígdala"],ans:1,exp:"El cerebelo coordina el movimiento y el equilibrio."},
+    {q:"¿A qué temperatura hierve el agua al nivel del mar?",opts:["90°C","95°C","100°C","105°C"],ans:2,exp:"El agua hierve a 100°C a presión atmosférica normal."},
+    {q:"¿Qué planeta es conocido como el planeta rojo?",opts:["Júpiter","Venus","Saturno","Marte"],ans:3,exp:"Marte aparece rojizo por el óxido de hierro de su superficie."},
+    {q:"¿Quién propuso la teoría de la evolución?",opts:["Mendel","Pasteur","Darwin","Wallace"],ans:2,exp:"Darwin publicó 'El origen de las especies' en 1859."},
+    {q:"¿Cuál es el hueso más largo del cuerpo humano?",opts:["Húmero","Tibia","Fémur","Radio"],ans:2,exp:"El fémur es el hueso más largo y resistente del cuerpo."},
+    {q:"¿Qué vitamina produce el cuerpo con el sol?",opts:["Vitamina A","Vitamina C","Vitamina D","Vitamina K"],ans:2,exp:"La piel sintetiza vitamina D3 con la radiación ultravioleta."},
+    {q:"¿Cuál es el elemento más abundante en la corteza terrestre?",opts:["Silicio","Hierro","Aluminio","Oxígeno"],ans:3,exp:"El oxígeno constituye el 46% de la corteza terrestre por peso."},
+    {q:"¿Qué es el ADN?",opts:["Proteína","Ácido desoxirribonucleico","Enzima","Hormona"],ans:1,exp:"El ADN (ácido desoxirribonucleico) contiene la información genética de los organismos."},
+    {q:"¿Cuántas cámaras tiene el corazón humano?",opts:["2","3","4","5"],ans:2,exp:"El corazón humano tiene 4 cámaras: 2 aurículas y 2 ventrículos."},
+    {q:"¿Qué órgano produce la insulina?",opts:["Hígado","Riñón","Páncreas","Bazo"],ans:2,exp:"El páncreas produce insulina, que regula el azúcar en sangre."},
+    {q:"¿Cuál es la unidad de frecuencia?",opts:["Voltio","Amperio","Hercio","Julio"],ans:2,exp:"El hercio (Hz) es la unidad de frecuencia del Sistema Internacional."},
+    {q:"¿Qué tipo de energía tiene un objeto en movimiento?",opts:["Potencial","Cinética","Térmica","Nuclear"],ans:1,exp:"La energía cinética es la energía de movimiento de un objeto."},
+    {q:"¿Cuántas capas tiene la Tierra?",opts:["2","3","4","5"],ans:2,exp:"La Tierra tiene 4 capas: corteza, manto, núcleo externo y núcleo interno."},
+    {q:"¿Qué es la fotosíntesis?",opts:["Digestión en plantas","Conversión de luz en energía","Respiración celular","Reproducción vegetal"],ans:1,exp:"La fotosíntesis convierte la luz solar, el CO2 y el agua en glucosa y oxígeno."},
+    {q:"¿Cuál es el símbolo químico del sodio?",opts:["So","Sd","Na","N"],ans:2,exp:"El sodio tiene símbolo Na, del latín 'natrium'."},
+    {q:"¿Qué mide un sismógrafo?",opts:["Temperatura","Presión","Terremotos","Humedad"],ans:2,exp:"El sismógrafo detecta y mide las ondas sísmicas de los terremotos."},
+    {q:"¿Cuántos planetas hay en el sistema solar con anillos?",opts:["1","2","3","4"],ans:3,exp:"Júpiter, Saturno, Urano y Neptuno tienen sistemas de anillos."},
+    {q:"¿Qué es un neutrón?",opts:["Partícula positiva","Partícula negativa","Partícula sin carga","Onda electromagnética"],ans:2,exp:"El neutrón es una partícula subatómica sin carga eléctrica del núcleo atómico."},
+    {q:"¿Cuál es el símbolo del oro en la tabla periódica?",opts:["Go","Or","Au","Ag"],ans:2,exp:"El oro tiene símbolo Au, del latín 'aurum'."},
+    {q:"¿Qué es la osmosis?",opts:["Movimiento de solutos","Paso de agua por membrana semipermeable","Reacción química","División celular"],ans:1,exp:"La osmosis es el movimiento de agua a través de una membrana semipermeable."},
+    {q:"¿Cuántos tipos de sangre existen en el sistema ABO?",opts:["2","3","4","5"],ans:2,exp:"El sistema ABO tiene 4 tipos: A, B, AB y O."},
+    {q:"¿Qué planeta tiene más lunas?",opts:["Júpiter","Saturno","Urano","Neptuno"],ans:1,exp:"Saturno tiene más de 140 lunas confirmadas, superando a Júpiter."},
+    {q:"¿Cuál es la velocidad del sonido en el aire?",opts:["300 m/s","343 m/s","400 m/s","500 m/s"],ans:1,exp:"El sonido viaja a unos 343 m/s en el aire a 20°C."},
+    {q:"¿Qué es un agujero negro?",opts:["Vacío en el espacio","Región con gravedad extrema","Estrella apagada","Planeta oscuro"],ans:1,exp:"Un agujero negro es una región del espacio con gravedad tan intensa que ni la luz puede escapar."},
+    {q:"¿Cuántos pares de nervios craneales tiene el ser humano?",opts:["10","12","14","16"],ans:1,exp:"El ser humano tiene 12 pares de nervios craneales."},
+    {q:"¿Qué gas es el más abundante en la atmósfera terrestre?",opts:["Oxígeno","Argón","CO2","Nitrógeno"],ans:3,exp:"El nitrógeno constituye el 78% de la atmósfera terrestre."},
+    {q:"¿Cuál es el punto de fusión del hierro?",opts:["1.000°C","1.538°C","2.000°C","800°C"],ans:1,exp:"El hierro funde a 1.538°C, lo que lo hace ideal para estructuras resistentes."},
+    {q:"¿Qué es un isótopo?",opts:["Elemento diferente","Mismo elemento, distinto número de neutrones","Ion cargado","Molécula compuesta"],ans:1,exp:"Los isótopos son átomos del mismo elemento con diferente número de neutrones."},
+    {q:"¿Cuántas vértebras cervicales tiene el ser humano?",opts:["5","6","7","8"],ans:2,exp:"El ser humano tiene 7 vértebras cervicales, igual que la mayoría de mamíferos."},
+    {q:"¿Qué es la entropía?",opts:["Energía almacenada","Medida del desorden","Velocidad molecular","Presión de gas"],ans:1,exp:"La entropía es una medida del grado de desorden o aleatoriedad de un sistema."},
+    {q:"¿Cuál es el metal más ligero?",opts:["Aluminio","Titanio","Litio","Magnesio"],ans:2,exp:"El litio es el metal más ligero y menos denso de todos los metales."},
+    {q:"¿Qué proceso convierte el azúcar en alcohol?",opts:["Oxidación","Fermentación","Destilación","Hidrólisis"],ans:1,exp:"La fermentación convierte azúcares en alcohol y CO2 mediante levaduras."},
+    {q:"¿Cuánto tarda la luz del Sol en llegar a la Tierra?",opts:["3 minutos","8 minutos","15 minutos","1 minuto"],ans:1,exp:"La luz del Sol tarda unos 8 minutos y 20 segundos en llegar a la Tierra."},
+    {q:"¿Qué es la mitosis?",opts:["Reproducción sexual","División celular","Síntesis de proteínas","Respiración celular"],ans:1,exp:"La mitosis es el proceso de división celular que produce células hijas idénticas."},
+    {q:"¿Cuál es el elemento más electronegativo?",opts:["Oxígeno","Cloro","Nitrógeno","Flúor"],ans:3,exp:"El flúor es el elemento más electronegativo de la tabla periódica."},
+    {q:"¿Qué mide el barómetro?",opts:["Temperatura","Humedad","Presión atmosférica","Velocidad del viento"],ans:2,exp:"El barómetro mide la presión atmosférica."},
+    {q:"¿Cuántos dientes de leche tiene un niño?",opts:["16","18","20","22"],ans:2,exp:"Los niños tienen 20 dientes de leche, que son reemplazados por 32 permanentes."},
+    {q:"¿Qué es un quasar?",opts:["Tipo de estrella","Núcleo galáctico activo","Agujero negro pequeño","Nebulosa oscura"],ans:1,exp:"Un quasar es el núcleo extremadamente brillante de una galaxia distante."},
+    {q:"¿Cuál es el símbolo del hierro?",opts:["Hi","Ir","Fe","Fr"],ans:2,exp:"El hierro tiene símbolo Fe, del latín 'ferrum'."},
+    {q:"¿Qué produce el efecto Doppler?",opts:["Cambio de color","Cambio de frecuencia por movimiento","Eco sonoro","Refracción de luz"],ans:1,exp:"El efecto Doppler es el cambio de frecuencia de una onda debido al movimiento relativo."},
+    {q:"¿Cuántas neuronas tiene el cerebro humano?",opts:["86 millones","86 mil millones","860 millones","8,6 billones"],ans:1,exp:"El cerebro humano tiene aproximadamente 86 mil millones de neuronas."},
+    {q:"¿Qué es la materia oscura?",opts:["Polvo cósmico","Materia que no emite luz pero tiene masa","Agujeros negros","Gas interestelar"],ans:1,exp:"La materia oscura es una forma de materia que no interactúa con la radiación electromagnética."},
+    {q:"¿Cuál es la ley de la gravedad universal?",opts:["F=ma","E=mc²","F=G(m1m2/r²)","PV=nRT"],ans:2,exp:"La ley de gravitación universal de Newton establece que F=G(m1m2/r²)."},
+    {q:"¿Qué es la bioluminiscencia?",opts:["Fotosíntesis marina","Luz producida por organismos vivos","Reflexión de luz solar","Reacción química explosiva"],ans:1,exp:"La bioluminiscencia es la producción de luz por organismos vivos mediante reacciones químicas."},
+    {q:"¿Cuántos litros de sangre tiene un adulto?",opts:["3-4 litros","4-5 litros","5-6 litros","6-7 litros"],ans:2,exp:"Un adulto tiene entre 5 y 6 litros de sangre circulando en su cuerpo."},
+    {q:"¿Qué es el Big Bang?",opts:["Explosión nuclear","Teoría del origen del universo","Colisión de galaxias","Supernova masiva"],ans:1,exp:"El Big Bang es la teoría cosmológica que describe el origen del universo hace 13.800 millones de años."},
+  ],
+  geografia: [
+    {q:"¿Cuál es la capital de Australia?",opts:["Sídney","Melbourne","Brisbane","Canberra"],ans:3,exp:"Canberra es la capital de Australia desde 1913."},
+    {q:"¿Qué río es el más largo del mundo?",opts:["Amazonas","Nilo","Yangtsé","Misisipi"],ans:1,exp:"El Nilo mide aproximadamente 6.650 km."},
+    {q:"¿Cuál es la montaña más alta del mundo?",opts:["K2","Monte Everest","Kangchenjunga","Lhotse"],ans:1,exp:"El Everest mide 8.849 metros sobre el nivel del mar."},
+    {q:"¿Cuál es el desierto más grande del mundo?",opts:["Sahara","Gobi","Kalahari","Antártico"],ans:3,exp:"La Antártida es técnicamente el mayor desierto del mundo."},
+    {q:"¿Cuántos países forman América del Sur?",opts:["10","12","13","14"],ans:1,exp:"América del Sur tiene 12 países soberanos."},
+    {q:"¿En qué país se encuentra Dubái?",opts:["Arabia Saudí","Qatar","Kuwait","Emiratos Árabes Unidos"],ans:3,exp:"Dubái es la ciudad más poblada de los Emiratos Árabes Unidos."},
+    {q:"¿Qué país tiene más lagos?",opts:["Rusia","Finlandia","Canadá","Estados Unidos"],ans:2,exp:"Canadá tiene más de 2 millones de lagos."},
+    {q:"¿Cuál es el país más pequeño del mundo?",opts:["Mónaco","San Marino","Liechtenstein","Vaticano"],ans:3,exp:"El Vaticano tiene apenas 0,44 km²."},
+    {q:"¿Cuál es la ciudad más poblada del mundo?",opts:["Shanghai","Bombay","Tokio","Pekín"],ans:2,exp:"El área metropolitana de Tokio supera los 37 millones de habitantes."},
+    {q:"¿En qué continente está Etiopía?",opts:["Asia","América del Sur","África","Oriente Medio"],ans:2,exp:"Etiopía está en el Cuerno de África."},
+    {q:"¿Cuál es el océano más pequeño?",opts:["Índico","Atlántico","Ártico","Antártico"],ans:2,exp:"El océano Ártico es el más pequeño y superficial de los cinco océanos."},
+    {q:"¿Qué país tiene más costa?",opts:["Rusia","Noruega","Canadá","Indonesia"],ans:2,exp:"Canadá tiene la costa más larga del mundo con más de 202.000 km."},
+    {q:"¿Dónde está el Sahara?",opts:["Asia","América","África","Australia"],ans:2,exp:"El Sahara cubre gran parte del norte de África."},
+    {q:"¿Cuál es la capital de Sudáfrica?",opts:["Ciudad del Cabo","Johannesburgo","Pretoria","Durban"],ans:2,exp:"Sudáfrica tiene tres capitales: Pretoria (ejecutiva), Ciudad del Cabo (legislativa) y Bloemfontein (judicial)."},
+    {q:"¿Qué país tiene más habitantes en Europa?",opts:["Alemania","Francia","Reino Unido","Rusia"],ans:3,exp:"Rusia es el país más poblado de Europa con más de 140 millones de habitantes."},
+    {q:"¿Dónde está el río Amazonas?",opts:["África","Asia","América del Sur","América Central"],ans:2,exp:"El Amazonas nace en Perú y desemboca en Brasil."},
+    {q:"¿Cuál es la cadena montañosa más larga?",opts:["Himalaya","Andes","Alpes","Montañas Rocosas"],ans:1,exp:"Los Andes son la cordillera más larga del mundo con 7.000 km."},
+    {q:"¿En qué país está el lago Titicaca?",opts:["Solo en Perú","Solo en Bolivia","En Perú y Bolivia","En Chile y Argentina"],ans:2,exp:"El lago Titicaca está compartido entre Perú y Bolivia."},
+    {q:"¿Cuál es la capital de Japón?",opts:["Osaka","Kioto","Hiroshima","Tokio"],ans:3,exp:"Tokio es la capital de Japón y una de las ciudades más pobladas del mundo."},
+    {q:"¿Qué país europeo tiene más superficie?",opts:["Ucrania","Francia","España","Rusia"],ans:3,exp:"Rusia es el país más grande de Europa y del mundo."},
+    {q:"¿Cuántos países hay en África?",opts:["48","52","54","58"],ans:2,exp:"África tiene 54 países reconocidos por la ONU."},
+    {q:"¿En qué país está el Monte Fuji?",opts:["China","Corea","Japón","Nepal"],ans:2,exp:"El Monte Fuji, con 3.776 metros, es el pico más alto de Japón."},
+    {q:"¿Cuál es el istmo más estrecho que une dos continentes?",opts:["Suez","Panamá","Malaca","Gibraltar"],ans:1,exp:"El istmo de Panamá une América del Norte y del Sur con apenas 80 km en su punto más estrecho."},
+    {q:"¿Dónde está la Gran Barrera de Coral?",opts:["Brasil","Indonesia","Filipinas","Australia"],ans:3,exp:"La Gran Barrera de Coral está en la costa noreste de Australia."},
+    {q:"¿Cuál es el punto más bajo de la Tierra?",opts:["Valle de la Muerte","Mar Muerto","Lago Assal","Depresión de Qattara"],ans:1,exp:"El Mar Muerto está a 430 metros bajo el nivel del mar."},
+    {q:"¿En qué continente está Nueva Zelanda?",opts:["Asia","Oceanía","Australia","Antártida"],ans:1,exp:"Nueva Zelanda pertenece a Oceanía, en el Pacífico Sur."},
+    {q:"¿Qué país comparte frontera con más países?",opts:["Rusia","Brasil","China","Alemania"],ans:0,exp:"Rusia y China comparten frontera con 14 países cada una."},
+    {q:"¿Cuál es la capital de Argentina?",opts:["Córdoba","Rosario","Mendoza","Buenos Aires"],ans:3,exp:"Buenos Aires es la capital y ciudad más poblada de Argentina."},
+    {q:"¿En qué país está la Torre Eiffel?",opts:["Bélgica","Francia","Italia","España"],ans:1,exp:"La Torre Eiffel está en París, Francia."},
+    {q:"¿Cuántos países hay en América del Norte?",opts:["3","5","7","9"],ans:0,exp:"América del Norte tiene 3 países: Canadá, Estados Unidos y México."},
+    {q:"¿Qué mar separa Europa de África?",opts:["Mar Negro","Mar Caspio","Mar Mediterráneo","Mar del Norte"],ans:2,exp:"El Mar Mediterráneo separa Europa de África."},
+    {q:"¿Cuál es el río más largo de América del Sur?",opts:["Orinoco","Paraná","Amazonas","Magdalena"],ans:2,exp:"El Amazonas, con más de 6.400 km, es el más largo de América del Sur."},
+    {q:"¿En qué país está Angkor Wat?",opts:["Tailandia","Vietnam","Laos","Camboya"],ans:3,exp:"Angkor Wat es un templo budista en Camboya, construido en el siglo XII."},
+    {q:"¿Cuál es la capital de Rusia?",opts:["San Petersburgo","Kiev","Moscú","Ekaterimburgo"],ans:2,exp:"Moscú es la capital de Rusia y la ciudad más poblada de Europa."},
+    {q:"¿Dónde está el desierto de Gobi?",opts:["Mongolia y China","Kazajistán","Irán","Arabia"],ans:0,exp:"El desierto de Gobi está en Mongolia y el norte de China."},
+    {q:"¿Cuál es el pico más alto de América?",opts:["Monte McKinley","Aconcagua","Chimborazo","Huascarán"],ans:1,exp:"El Aconcagua en Argentina, con 6.961 m, es el pico más alto de América."},
+    {q:"¿En qué país están las Cataratas del Iguazú?",opts:["Solo en Brasil","Solo en Argentina","En Brasil y Argentina","En Paraguay"],ans:2,exp:"Las Cataratas del Iguazú están en la frontera entre Brasil y Argentina."},
+    {q:"¿Cuál es el mar interior más grande del mundo?",opts:["Mar Negro","Mar Caspio","Mar de Arabia","Mar Mediterráneo"],ans:1,exp:"El Mar Caspio es el mayor lago o mar interior del mundo."},
+    {q:"¿En qué continente está Marruecos?",opts:["Europa","Asia","África","Oriente Medio"],ans:2,exp:"Marruecos está en el noroeste de África, frente a España."},
+    {q:"¿Cuál es el estado más grande de Estados Unidos?",opts:["Texas","California","Montana","Alaska"],ans:3,exp:"Alaska es el estado más grande de EE.UU. con 1.723.337 km²."},
+    {q:"¿Qué cordillera separa Europa de Asia?",opts:["Alpes","Cárpatos","Urales","Cáucaso"],ans:2,exp:"Los montes Urales se consideran el límite convencional entre Europa y Asia."},
+    {q:"¿Cuál es el país más largo del mundo de norte a sur?",opts:["Rusia","Brasil","Chile","Argentina"],ans:2,exp:"Chile tiene más de 4.300 km de largo de norte a sur."},
+    {q:"¿En qué país está el volcán Kilimanjaro?",opts:["Kenia","Uganda","Etiopía","Tanzania"],ans:3,exp:"El Kilimanjaro está en Tanzania y es el pico más alto de África con 5.895 m."},
+    {q:"¿Cuántos países baña el río Danubio?",opts:["8","10","12","14"],ans:1,exp:"El Danubio pasa por 10 países europeos, más que cualquier otro río."},
+    {q:"¿Cuál es la capital de China?",opts:["Shanghái","Cantón","Nankín","Pekín"],ans:3,exp:"Pekín (Beijing) es la capital de China."},
+    {q:"¿Dónde está la selva del Amazonas?",opts:["Solo en Brasil","En Brasil y países vecinos","Solo en Venezuela","Solo en Perú"],ans:1,exp:"La selva amazónica se extiende por Brasil y 8 países sudamericanos más."},
+    {q:"¿Cuál es el mar más salado del mundo?",opts:["Mar Muerto","Mar Rojo","Mar Caspio","Mar Mediterráneo"],ans:0,exp:"El Mar Muerto tiene una salinidad de casi el 34%, diez veces más que el océano."},
+    {q:"¿En qué país están los fiordos más famosos?",opts:["Suecia","Dinamarca","Islandia","Noruega"],ans:3,exp:"Noruega es famosa por sus espectaculares fiordos en la costa occidental."},
+    {q:"¿Cuál es la capital de India?",opts:["Bombay","Calcuta","Madrás","Nueva Delhi"],ans:3,exp:"Nueva Delhi es la capital de India."},
+    {q:"¿Qué país tiene más fronteras en Europa?",opts:["Alemania","Francia","Austria","Rusia"],ans:0,exp:"Alemania comparte frontera con 9 países europeos."},
+    {q:"¿Dónde está el Sahara Occidental?",opts:["Solo en Mauritania","En el noroeste de África","En el sur de Argelia","En el este de Libia"],ans:1,exp:"El Sahara Occidental está en el noroeste de África, entre Marruecos y Mauritania."},
+  ],
+  deportes: [
+    {q:"¿Qué país ganó la primera Copa del Mundo de fútbol?",opts:["Brasil","Argentina","Italia","Uruguay"],ans:3,exp:"Uruguay ganó la primera Copa del Mundo en 1930 en su propio país."},
+    {q:"¿Cuántos puntos vale un 'try' en rugby union?",opts:["3","4","5","6"],ans:2,exp:"Un try vale 5 puntos en rugby union."},
+    {q:"¿En qué año se celebraron los primeros JJ.OO. modernos?",opts:["1888","1896","1900","1904"],ans:1,exp:"Los primeros Juegos Olímpicos modernos se celebraron en Atenas en 1896."},
+    {q:"¿Qué tenista tiene más Grand Slams masculinos?",opts:["Nadal","Djokovic","Federer","Sampras"],ans:1,exp:"Novak Djokovic ha ganado 24 títulos de Grand Slam."},
+    {q:"¿Cuántos jugadores tiene un equipo de baloncesto?",opts:["4","5","6","7"],ans:1,exp:"Cada equipo de baloncesto tiene 5 jugadores en cancha."},
+    {q:"¿Qué país ha ganado más Copas del Mundo de fútbol?",opts:["Alemania","Argentina","Italia","Brasil"],ans:3,exp:"Brasil ha ganado 5 Copas del Mundo."},
+    {q:"¿En qué deporte se usa el término 'albatros'?",opts:["Tenis","Golf","Cricket","Béisbol"],ans:1,exp:"En golf, un albatros es completar un hoyo 3 golpes por debajo del par."},
+    {q:"¿Cuántos anillos tiene la bandera olímpica?",opts:["4","5","6","7"],ans:1,exp:"La bandera olímpica tiene 5 anillos que representan los 5 continentes."},
+    {q:"¿Qué equipo ha ganado más Champions League?",opts:["Barcelona","AC Milan","Liverpool","Real Madrid"],ans:3,exp:"El Real Madrid ha ganado la Champions League en 15 ocasiones."},
+    {q:"¿Cuántos jugadores forman un equipo de fútbol?",opts:["10","11","12","9"],ans:1,exp:"Cada equipo tiene 11 jugadores en el campo incluyendo el portero."},
+    {q:"¿Qué deporte practica Roger Federer?",opts:["Golf","Tenis","Squash","Badminton"],ans:1,exp:"Roger Federer es uno de los tenistas más grandes de la historia."},
+    {q:"¿Cuánto dura un partido de fútbol?",opts:["80 minutos","90 minutos","100 minutos","120 minutos"],ans:1,exp:"Un partido de fútbol dura 90 minutos, divididos en dos tiempos de 45."},
+    {q:"¿En qué año se fundó el FC Barcelona?",opts:["1895","1899","1902","1910"],ans:1,exp:"El FC Barcelona fue fundado el 29 de noviembre de 1899."},
+    {q:"¿Qué nadador tiene más medallas olímpicas?",opts:["Ian Thorpe","Mark Spitz","Ryan Lochte","Michael Phelps"],ans:3,exp:"Michael Phelps tiene 28 medallas olímpicas, el mayor logro en la historia de los JJ.OO."},
+    {q:"¿Cuántos sets gana quien gana un partido de tenis masculino en Grand Slam?",opts:["2","3","4","5"],ans:1,exp:"En torneos Grand Slam masculinos se juega al mejor de 5 sets, ganando quien consiga 3."},
+    {q:"¿Qué deporte se juega en Wimbledon?",opts:["Golf","Críquet","Tenis","Squash"],ans:2,exp:"Wimbledon es el torneo de tenis más antiguo del mundo, celebrado desde 1877."},
+    {q:"¿Cuántos metros tiene una piscina olímpica?",opts:["25m","50m","75m","100m"],ans:1,exp:"Una piscina olímpica mide 50 metros de largo y 25 metros de ancho."},
+    {q:"¿Qué boxeador fue llamado 'El más grande'?",opts:["Joe Frazier","Mike Tyson","Muhammad Ali","Sugar Ray Leonard"],ans:2,exp:"Muhammad Ali era conocido como 'The Greatest' (El más grande)."},
+    {q:"¿Cuántos kilómetros tiene un maratón?",opts:["40 km","41,195 km","42,195 km","43 km"],ans:2,exp:"Un maratón mide exactamente 42,195 kilómetros."},
+    {q:"¿En qué país se originó el sumo?",opts:["China","Corea","Mongolia","Japón"],ans:3,exp:"El sumo es un deporte de lucha japonés con más de 1.500 años de historia."},
+    {q:"¿Qué equipo de fútbol americano ha ganado más Super Bowls?",opts:["Dallas Cowboys","San Francisco 49ers","New England Patriots","Pittsburgh Steelers"],ans:2,exp:"Los New England Patriots han ganado 6 Super Bowls."},
+    {q:"¿Cuántos jugadores tiene un equipo de béisbol?",opts:["8","9","10","11"],ans:1,exp:"Un equipo de béisbol tiene 9 jugadores en el campo."},
+    {q:"¿Qué deporte inventaron los aztecas?",opts:["Polo","Lacrosse","Juego de pelota","Tiro con arco"],ans:2,exp:"Los aztecas practicaban el juego de pelota, considerado el deporte de equipo más antiguo del mundo."},
+    {q:"¿Cuántos palos usa un golfista profesional?",opts:["12","14","16","18"],ans:1,exp:"Un golfista puede llevar hasta 14 palos en su bolsa según las reglas del golf."},
+    {q:"¿Qué país inventó el críquet?",opts:["Australia","India","Sudáfrica","Inglaterra"],ans:3,exp:"El críquet se originó en Inglaterra en el siglo XVI."},
+    {q:"¿Cuánto pesa un balón oficial de fútbol?",opts:["350-380g","410-450g","500-550g","300-340g"],ans:1,exp:"Un balón oficial de fútbol pesa entre 410 y 450 gramos."},
+    {q:"¿Qué club tiene más Ligas españolas?",opts:["FC Barcelona","Atlético de Madrid","Athletic Club","Real Madrid"],ans:3,exp:"El Real Madrid ha ganado más de 35 títulos de Liga española."},
+    {q:"¿Cuántos jugadores tiene un equipo de rugby union?",opts:["13","15","17","11"],ans:1,exp:"Un equipo de rugby union tiene 15 jugadores en el campo."},
+    {q:"¿Qué deporte se practica en el Tour de Francia?",opts:["Triatlón","Ciclismo","Atletismo","Esquí"],ans:1,exp:"El Tour de Francia es la carrera ciclista más famosa del mundo."},
+    {q:"¿Cuántos puntos vale una canasta de 3 en baloncesto?",opts:["2","3","4","5"],ans:1,exp:"Una canasta desde más allá del arco de los 6,75 metros vale 3 puntos."},
+    {q:"¿Qué atleta tiene más medallas de oro olímpicas en atletismo?",opts:["Carl Lewis","Usain Bolt","Jesse Owens","Michael Johnson"],ans:1,exp:"Usain Bolt ganó 8 medallas de oro olímpicas en atletismo."},
+    {q:"¿Cuántas disciplinas tiene el pentatlón moderno?",opts:["4","5","6","7"],ans:1,exp:"El pentatlón moderno tiene 5 disciplinas: esgrima, natación, equitación, tiro y carrera."},
+    {q:"¿En qué año se incorporó el fútbol a los JJ.OO.?",opts:["1896","1900","1908","1924"],ans:1,exp:"El fútbol debutó en los Juegos Olímpicos de París en 1900."},
+    {q:"¿Qué país ganó más medallas de oro en los JJ.OO. de 2020 (Tokio)?",opts:["China","Rusia","Reino Unido","Estados Unidos"],ans:3,exp:"Estados Unidos ganó más medallas de oro en los Juegos de Tokio 2020."},
+    {q:"¿Cuánto mide la red en tenis?",opts:["0,80m","0,91m","1,00m","1,07m"],ans:1,exp:"La red de tenis mide 0,914 metros en el centro y 1,07 metros en los postes."},
+    {q:"¿Qué deporte se disputa en el Roland Garros?",opts:["Pádel","Squash","Tenis","Bádminton"],ans:2,exp:"Roland Garros es el Grand Slam de tenis que se juega en arcilla en París."},
+    {q:"¿Cuántos jugadores tiene un equipo de polo?",opts:["2","3","4","5"],ans:2,exp:"Cada equipo de polo tiene 4 jugadores montados a caballo."},
+    {q:"¿Qué país ha ganado más Copas del Mundo de rugby?",opts:["Australia","Francia","Nueva Zelanda","Sudáfrica"],ans:2,exp:"Nueva Zelanda (All Blacks) ha ganado 3 Copas del Mundo de rugby (1987, 2011, 2015)."},
+    {q:"¿Cuánto mide la pista de atletismo estándar?",opts:["300m","400m","500m","600m"],ans:1,exp:"Una pista de atletismo estándar mide 400 metros por vuelta."},
+    {q:"¿Qué deporte practica LeBron James?",opts:["Fútbol americano","Baloncesto","Béisbol","Hockey"],ans:1,exp:"LeBron James es uno de los mejores jugadores de baloncesto de la NBA."},
+    {q:"¿Cuántas vueltas tiene el Tour de Francia aproximadamente?",opts:["15 etapas","21 etapas","25 etapas","18 etapas"],ans:1,exp:"El Tour de Francia tiene 21 etapas que recorren unos 3.500 km."},
+    {q:"¿Qué país ganó más copas del mundo de fútbol femenino?",opts:["Alemania","Brasil","Japón","Estados Unidos"],ans:3,exp:"Estados Unidos ha ganado 4 Copas del Mundo femeninas (1991, 1999, 2015, 2019)."},
+    {q:"¿En qué año se creó la UEFA Champions League?",opts:["1950","1955","1960","1965"],ans:1,exp:"La Copa de Europa (actual Champions League) se creó en 1955."},
+    {q:"¿Qué deporte se practica en el US Open de Nueva York?",opts:["Golf","Tenis","Polo","Squash"],ans:1,exp:"El US Open es uno de los cuatro torneos de Grand Slam de tenis."},
+    {q:"¿Cuántas rondas tiene un combate de boxeo profesional?",opts:["10","12","15","20"],ans:1,exp:"Un combate de boxeo profesional estándar tiene 12 asaltos de 3 minutos."},
+    {q:"¿Qué equipo de la NBA tiene más títulos?",opts:["Los Angeles Lakers","Chicago Bulls","Golden State Warriors","Boston Celtics"],ans:3,exp:"Los Boston Celtics tienen 17 títulos de la NBA, el récord histórico."},
+    {q:"¿Cuántos jugadores tiene un equipo de hockey sobre hielo?",opts:["5","6","7","8"],ans:1,exp:"Un equipo de hockey sobre hielo tiene 6 jugadores, incluyendo el portero."},
+    {q:"¿Qué piloto tiene más títulos de Fórmula 1?",opts:["Ayrton Senna","Alain Prost","Michael Schumacher","Lewis Hamilton"],ans:3,exp:"Lewis Hamilton tiene 7 títulos mundiales de Fórmula 1."},
+    {q:"¿Cuánto dura un período en baloncesto de la NBA?",opts:["10 minutos","12 minutos","15 minutos","8 minutos"],ans:1,exp:"Cada cuarto de la NBA dura 12 minutos, haciendo un total de 48 minutos."},
+    {q:"¿Qué es el Grand Slam en béisbol?",opts:["Jonrón sin corredores","Jonrón con bases llenas","Cuatro jonrones seguidos","Victoria en cuatro partidos"],ans:1,exp:"En béisbol, el Grand Slam es un jonrón con las bases llenas, anotando 4 carreras."},
+    {q:"¿En qué país se originó el judo?",opts:["China","Corea","Japón","Mongolia"],ans:2,exp:"El judo fue creado en Japón por Jigoro Kano en 1882."},
+  ],
+  cine: [
+    {q:"¿Quién dirigió 'El padrino' (1972)?",opts:["Scorsese","Spielberg","Coppola","Kubrick"],ans:2,exp:"Francis Ford Coppola dirigió El padrino. Ganó 3 Oscars."},
+    {q:"¿Qué película ganó el Oscar a mejor película en 2020?",opts:["1917","Joker","Había una vez...","Parásitos"],ans:3,exp:"Parásitos fue la primera película no angloparlante en ganar el Oscar a mejor película."},
+    {q:"¿Quién interpreta a Iron Man en el MCU?",opts:["Chris Hemsworth","Chris Evans","Robert Downey Jr.","Mark Ruffalo"],ans:2,exp:"Robert Downey Jr. interpretó a Tony Stark en 10 películas del MCU."},
+    {q:"¿Cuál es la película más taquillera de todos los tiempos?",opts:["Titanic","Avatar","Endgame","Avatar 2"],ans:1,exp:"Avatar (2009) sigue siendo la película con mayor recaudación mundial."},
+    {q:"¿En qué año se estrenó Star Wars: Una nueva esperanza?",opts:["1975","1977","1979","1981"],ans:1,exp:"Star Wars se estrenó el 25 de mayo de 1977."},
+    {q:"¿Quién compuso la banda sonora de Star Wars?",opts:["Zimmer","Elfman","John Williams","Morricone"],ans:2,exp:"John Williams ha compuesto todas las bandas sonoras de la saga principal."},
+    {q:"¿Quién dirigió 'Pulp Fiction'?",opts:["Fincher","Joel Coen","Tarantino","Lynch"],ans:2,exp:"Tarantino dirigió Pulp Fiction en 1994. Ganó la Palma de Oro en Cannes."},
+    {q:"¿Qué actor interpretó a Forrest Gump?",opts:["Kevin Costner","Tom Hanks","Jeff Bridges","Denzel Washington"],ans:1,exp:"Tom Hanks ganó su segundo Oscar consecutivo por Forrest Gump."},
+    {q:"¿En qué año se estrenó Titanic de James Cameron?",opts:["1995","1996","1997","1998"],ans:2,exp:"Titanic se estrenó en diciembre de 1997 y ganó 11 Oscars."},
+    {q:"¿Qué película tiene el famoso diálogo 'Frankly, my dear, I don't give a damn'?",opts:["Casablanca","Lo que el viento se llevó","Ciudadano Kane","El padrino"],ans:1,exp:"Este icónico diálogo es de 'Lo que el viento se llevó' (1939)."},
+    {q:"¿Quién dirigió '2001: Una odisea del espacio'?",opts:["Ridley Scott","George Lucas","Steven Spielberg","Stanley Kubrick"],ans:3,exp:"Stanley Kubrick dirigió esta obra maestra del cine de ciencia ficción en 1968."},
+    {q:"¿Qué estudio produjo las películas de Toy Story?",opts:["DreamWorks","Disney","Pixar","Blue Sky"],ans:2,exp:"Pixar Animation Studios produjo la saga Toy Story, con el apoyo de Disney."},
+    {q:"¿Quién interpretó a James Bond por primera vez?",opts:["Roger Moore","Sean Connery","George Lazenby","Timothy Dalton"],ans:1,exp:"Sean Connery interpretó a James Bond por primera vez en 'Dr. No' (1962)."},
+    {q:"¿Qué película de Spielberg sobre tiburones fue un éxito en 1975?",opts:["El abismo","Tiburón","Jaws 2","Deep Blue Sea"],ans:1,exp:"Tiburón (Jaws, 1975) fue la primera película en recaudar 100 millones de dólares."},
+    {q:"¿Quién protagonizó 'El silencio de los corderos'?",opts:["Meryl Streep","Glenn Close","Jodie Foster","Sigourney Weaver"],ans:2,exp:"Jodie Foster ganó el Oscar por su papel de Clarice Starling en 1991."},
+    {q:"¿Qué actriz es conocida como 'La Reina de Hollywood'?",opts:["Audrey Hepburn","Marilyn Monroe","Elizabeth Taylor","Katharine Hepburn"],ans:1,exp:"Marilyn Monroe es una de las iconos más reconocibles del cine clásico de Hollywood."},
+    {q:"¿Qué película protagonizó Tom Hanks como náufrago?",opts:["Náufrago","Gravedad","The Martian","Superviviente"],ans:0,exp:"Náufrago (Cast Away, 2000) muestra a Tom Hanks sobreviviendo solo en una isla."},
+    {q:"¿Quién dirigió 'El señor de los anillos'?",opts:["Peter Jackson","Ridley Scott","James Cameron","Christopher Nolan"],ans:0,exp:"Peter Jackson dirigió la trilogía de El señor de los anillos (2001-2003)."},
+    {q:"¿Qué película de Christopher Nolan sobre sueños fue un éxito en 2010?",opts:["Interstellar","El origen","Memento","Tenet"],ans:1,exp:"El origen (Inception, 2010) es un thriller de ciencia ficción sobre la manipulación de sueños."},
+    {q:"¿Cuántas películas tiene la saga de Harry Potter?",opts:["6","7","8","9"],ans:2,exp:"La saga principal de Harry Potter tiene 8 películas, basadas en 7 libros."},
+    {q:"¿Quién dirigió 'Schindler's List'?",opts:["Martin Scorsese","Steven Spielberg","Roman Polanski","Oliver Stone"],ans:1,exp:"Steven Spielberg dirigió La lista de Schindler en 1993, ganando el Oscar."},
+    {q:"¿Qué actor ganó más Oscars?",opts:["Jack Nicholson","Daniel Day-Lewis","Walter Brennan","Spencer Tracy"],ans:1,exp:"Daniel Day-Lewis ha ganado 3 Oscars al mejor actor, el récord en esa categoría."},
+    {q:"¿En qué año se estrenó 'El rey León' de Disney?",opts:["1992","1993","1994","1995"],ans:2,exp:"El Rey León se estrenó el 15 de junio de 1994."},
+    {q:"¿Quién interpretó a Hannibal Lecter en 'El silencio de los corderos'?",opts:["Gary Oldman","Anthony Hopkins","Jeremy Irons","Ian McKellen"],ans:1,exp:"Anthony Hopkins ganó el Oscar por interpretar a Hannibal Lecter."},
+    {q:"¿Qué película de ciencia ficción de 1982 habla de un alien amigable?",opts:["Alien","E.T.","Encuentros en la tercera fase","Cocoon"],ans:1,exp:"E.T. el extraterrestre, dirigida por Spielberg en 1982, es una de las películas más queridas de la historia."},
+    {q:"¿Quién protagonizó 'Matrix'?",opts:["Brad Pitt","Tom Cruise","Keanu Reeves","Will Smith"],ans:2,exp:"Keanu Reeves interpretó a Neo en la trilogía Matrix (1999-2003)."},
+    {q:"¿Qué actriz protagonizó 'Breakfast at Tiffany's'?",opts:["Grace Kelly","Marilyn Monroe","Audrey Hepburn","Elizabeth Taylor"],ans:2,exp:"Audrey Hepburn protagonizó Desayuno con diamantes (1961)."},
+    {q:"¿Qué película ganó el Oscar a mejor película extranjera en 2004?",opts:["Amores perros","El hijo de la novia","Mar adentro","La vida es bella"],ans:2,exp:"Mar adentro, del director Alejandro Amenábar, ganó el Oscar en 2005 (edición de 2004)."},
+    {q:"¿Quién dirigió 'El club de la lucha'?",opts:["David Fincher","Darren Aronofsky","Paul Thomas Anderson","Wes Anderson"],ans:0,exp:"David Fincher dirigió El club de la lucha (1999) con Brad Pitt y Edward Norton."},
+    {q:"¿Qué película protagonizó Jim Carrey como un hombre cuya vida es televisada?",opts:["The Cable Guy","El show de Truman","Liar Liar","Eterno resplandor"],ans:1,exp:"El show de Truman (1998) muestra a un hombre cuya vida entera es retransmitida en directo."},
+    {q:"¿Cuántas películas tiene la saga Indiana Jones original?",opts:["3","4","5","6"],ans:0,exp:"La saga original de Indiana Jones tiene 4 películas (1981-2008), más la quinta en 2023."},
+    {q:"¿Quién compuso la música de 'El padrino'?",opts:["Ennio Morricone","Nino Rota","Bernard Herrmann","Henry Mancini"],ans:1,exp:"Nino Rota compuso la icónica música de El padrino."},
+    {q:"¿Qué película de terror de Stephen King fue dirigida por Stanley Kubrick?",opts:["It","Carrie","El resplandor","Misery"],ans:2,exp:"El resplandor (The Shining, 1980) fue dirigida por Kubrick con Jack Nicholson."},
+    {q:"¿En qué año se estrenó 'La guerra de las galaxias' original?",opts:["1975","1976","1977","1978"],ans:2,exp:"Star Wars: Episodio IV se estrenó el 25 de mayo de 1977."},
+    {q:"¿Quién interpretó a Batman en la trilogía de Christopher Nolan?",opts:["Ben Affleck","Val Kilmer","Michael Keaton","Christian Bale"],ans:3,exp:"Christian Bale interpretó a Bruce Wayne/Batman en la trilogía oscura de Nolan."},
+    {q:"¿Qué película de animación de Studio Ghibli es la más conocida?",opts:["Princesa Mononoke","El castillo ambulante","Mi vecino Totoro","El viaje de Chihiro"],ans:3,exp:"El viaje de Chihiro (2001) ganó el Oscar a mejor película de animación."},
+    {q:"¿Quién dirigió 'Apocalypse Now'?",opts:["Oliver Stone","Francis Ford Coppola","Martin Scorsese","Michael Cimino"],ans:1,exp:"Francis Ford Coppola dirigió Apocalypse Now en 1979, ganando la Palma de Oro en Cannes."},
+    {q:"¿Qué película es la más larga de la historia del cine mainstream?",opts:["Cleopatra","Ben-Hur","Lawrence de Arabia","Gone with the Wind"],ans:1,exp:"Ben-Hur (1959) dura 3 horas y 32 minutos y ganó 11 Oscars."},
+    {q:"¿Quién protagonizó 'Casablanca' junto a Ingrid Bergman?",opts:["Cary Grant","Gregory Peck","Humphrey Bogart","James Stewart"],ans:2,exp:"Humphrey Bogart interpretó a Rick Blaine en Casablanca (1942)."},
+    {q:"¿Qué actriz ganó más Oscars en la historia?",opts:["Cate Blanchett","Katharine Hepburn","Meryl Streep","Bette Davis"],ans:1,exp:"Katharine Hepburn ganó 4 Oscars a la mejor actriz, el récord histórico."},
+    {q:"¿En qué año se estrenó 'El padrino'?",opts:["1970","1971","1972","1973"],ans:2,exp:"El padrino se estrenó el 24 de marzo de 1972."},
+    {q:"¿Qué película protagonizó Russell Crowe como gladiador romano?",opts:["Ben-Hur","Espartaco","Gladiator","Troya"],ans:2,exp:"Gladiator (2000) de Ridley Scott ganó el Oscar a mejor película."},
+    {q:"¿Quién dirigió 'Los siete samurais'?",opts:["Yasujiro Ozu","Akira Kurosawa","Kenji Mizoguchi","Masaki Kobayashi"],ans:1,exp:"Akira Kurosawa dirigió Los siete samurais en 1954, una de las mejores películas de la historia."},
+    {q:"¿Qué película de Pixar trata sobre robots en un planeta abandonado?",opts:["Monstruos S.A.","WALL-E","Ratatouille","Up"],ans:1,exp:"WALL-E (2008) sigue a un robot que limpia la Tierra abandonada por los humanos."},
+    {q:"¿Quién interpretó a Jack Sparrow en 'Piratas del Caribe'?",opts:["Orlando Bloom","Johnny Depp","Keira Knightley","Geoffrey Rush"],ans:1,exp:"Johnny Depp creó el icónico personaje del Capitán Jack Sparrow."},
+    {q:"¿Qué película de terror de 1973 habla de una posesión demoníaca?",opts:["La semilla del diablo","El exorcista","Poltergeist","La profecía"],ans:1,exp:"El exorcista (1973) de William Friedkin es considerada una de las mejores películas de terror."},
+    {q:"¿Quién protagonizó 'Citizen Kane'?",opts:["Orson Welles","John Huston","Billy Wilder","Howard Hawks"],ans:0,exp:"Orson Welles protagonizó y dirigió Ciudadano Kane (1941), considerada una de las mejores películas de la historia."},
+    {q:"¿Qué película de Woody Allen ganó el Oscar a mejor película en 1977?",opts:["Manhattan","Hannah y sus hermanas","Zelig","Annie Hall"],ans:3,exp:"Annie Hall ganó el Oscar a mejor película en la ceremonia de 1977."},
+    {q:"¿Cuántas veces ha ganado Meryl Streep el Oscar?",opts:["2","3","4","5"],ans:1,exp:"Meryl Streep ha ganado 3 Oscars: Kramer vs. Kramer (1979), La decisión de Sophie (1982) y La dama de hierro (2011)."},
+    {q:"¿Qué película del director Alfonso Cuarón ganó el Oscar a mejor película en 2019?",opts:["Gravity","Children of Men","Y tu mamá también","Roma"],ans:3,exp:"Roma (2018) ganó el Oscar a mejor película de habla no inglesa y mejor director."},
+    {q:"¿Quién compuso la música de 'El bueno, el feo y el malo'?",opts:["Bernard Herrmann","Henry Mancini","John Barry","Ennio Morricone"],ans:3,exp:"Ennio Morricone compuso la icónica banda sonora del western de Sergio Leone."},
+  ],
+  musica: [
+    {q:"¿Qué álbum lanzó Michael Jackson en 1982?",opts:["Bad","Dangerous","Thriller","Off the Wall"],ans:2,exp:"Thriller es el álbum más vendido de la historia con más de 66 millones de copias."},
+    {q:"¿Cuántas cuerdas tiene una guitarra española?",opts:["4","5","6","7"],ans:2,exp:"La guitarra clásica tiene 6 cuerdas."},
+    {q:"¿Quién compuso la Quinta Sinfonía?",opts:["Mozart","Bach","Beethoven","Chopin"],ans:2,exp:"Beethoven compuso su famosa Quinta Sinfonía entre 1804 y 1808."},
+    {q:"¿De qué país son los Beatles?",opts:["Estados Unidos","Australia","Irlanda","Reino Unido"],ans:3,exp:"Los Beatles se formaron en Liverpool, Inglaterra."},
+    {q:"¿Qué instrumento tocaba Miles Davis?",opts:["Saxofón","Trompeta","Trombón","Clarinete"],ans:1,exp:"Miles Davis fue uno de los trompetistas más influyentes del jazz."},
+    {q:"¿Cuántas notas hay en la escala diatónica?",opts:["5","6","7","8"],ans:2,exp:"La escala diatónica tiene 7 notas: Do, Re, Mi, Fa, Sol, La, Si."},
+    {q:"¿Qué artista fue llamado 'El Rey del Rock and Roll'?",opts:["Chuck Berry","Little Richard","Jerry Lee Lewis","Elvis Presley"],ans:3,exp:"Elvis Presley popularizó el rock and roll en los años 50."},
+    {q:"¿En qué año se disolvieron The Beatles?",opts:["1968","1969","1970","1972"],ans:2,exp:"The Beatles se disolvieron oficialmente en 1970."},
+    {q:"¿Qué cantante española ganó Eurovisión en 1968?",opts:["Massiel","Rocío Jurado","Lola Flores","Raphael"],ans:0,exp:"Massiel ganó Eurovisión 1968 con 'La, la, la'."},
+    {q:"¿Qué instrumento toca Yo-Yo Ma?",opts:["Violín","Viola","Chelo","Contrabajo"],ans:2,exp:"Yo-Yo Ma es uno de los chelistas más grandes de todos los tiempos."},
+    {q:"¿Quién compuso 'La flauta mágica'?",opts:["Handel","Haydn","Schubert","Mozart"],ans:3,exp:"Mozart compuso La flauta mágica en 1791."},
+    {q:"¿Qué género musical nació en Jamaica?",opts:["Calipso","Soca","Reggae","Cumbia"],ans:2,exp:"El reggae surgió en Jamaica a finales de los años 60."},
+    {q:"¿Quién es conocido como 'El rey del pop'?",opts:["Prince","David Bowie","Michael Jackson","Elton John"],ans:2,exp:"Michael Jackson fue apodado 'El rey del pop' por su impacto en la música popular."},
+    {q:"¿Qué instrumento es Stradivarius?",opts:["Piano","Guitarra","Violín","Flauta"],ans:2,exp:"Stradivarius son violines artesanales fabricados por Antonio Stradivari, los más valiosos del mundo."},
+    {q:"¿Quién compuso las Cuatro Estaciones?",opts:["Bach","Haydn","Vivaldi","Handel"],ans:2,exp:"Antonio Vivaldi compuso Las cuatro estaciones alrededor de 1723."},
+    {q:"¿Qué cantante fue conocida como 'Lady Soul'?",opts:["Tina Turner","Whitney Houston","Diana Ross","Aretha Franklin"],ans:3,exp:"Aretha Franklin era conocida como 'Lady Soul' y 'La reina del soul'."},
+    {q:"¿En qué año nació Mozart?",opts:["1750","1756","1760","1770"],ans:1,exp:"Wolfgang Amadeus Mozart nació el 27 de enero de 1756 en Salzburgo."},
+    {q:"¿Qué instrumento tiene 88 teclas?",opts:["Órgano","Piano","Clavecín","Acordeón"],ans:1,exp:"El piano estándar tiene 88 teclas: 52 blancas y 36 negras."},
+    {q:"¿Quién cantó 'Bohemian Rhapsody'?",opts:["David Bowie","Led Zeppelin","Queen","The Rolling Stones"],ans:2,exp:"Bohemian Rhapsody es una canción de Queen compuesta por Freddie Mercury en 1975."},
+    {q:"¿Qué cantante lanzó el álbum 'Purple Rain'?",opts:["Michael Jackson","David Bowie","Prince","Stevie Wonder"],ans:2,exp:"Purple Rain fue el quinto álbum de Prince, lanzado en 1984."},
+    {q:"¿Cuántas notas tiene la escala pentatónica?",opts:["4","5","6","7"],ans:1,exp:"La escala pentatónica tiene 5 notas y se usa ampliamente en blues y rock."},
+    {q:"¿Qué banda lanzó el álbum 'Dark Side of the Moon'?",opts:["Led Zeppelin","Pink Floyd","The Who","Genesis"],ans:1,exp:"Dark Side of the Moon de Pink Floyd (1973) pasó 741 semanas en las listas de Billboard."},
+    {q:"¿Quién es el compositor de 'La novena sinfonía'?",opts:["Brahms","Schubert","Beethoven","Bruckner"],ans:2,exp:"Beethoven compuso la Novena Sinfonía en 1824, cuando ya era sordo."},
+    {q:"¿Qué banda inglesa tenía a Mick Jagger como vocalista?",opts:["The Who","The Kinks","The Rolling Stones","The Yardbirds"],ans:2,exp:"Mick Jagger es el vocalista de The Rolling Stones desde 1962."},
+    {q:"¿Qué es un ostinato en música?",opts:["Escala descendente","Patrón rítmico repetido","Silencio musical","Acorde disonante"],ans:1,exp:"Un ostinato es un patrón rítmico o melódico que se repite persistentemente."},
+    {q:"¿Quién compuso el 'Himno a la Alegría'?",opts:["Brahms","Schubert","Händel","Beethoven"],ans:3,exp:"El Himno a la Alegría es el último movimiento de la Novena Sinfonía de Beethoven."},
+    {q:"¿Qué cantante es conocida como 'La reina del pop'?",opts:["Beyoncé","Lady Gaga","Madonna","Britney Spears"],ans:2,exp:"Madonna es conocida como 'La reina del pop' por su impacto en la música desde los 80."},
+    {q:"¿Cuántas cuerdas tiene un violín?",opts:["4","5","6","3"],ans:0,exp:"El violín tiene 4 cuerdas: Sol, Re, La y Mi."},
+    {q:"¿Qué es el BPM en música?",opts:["Base por minuto","Batidas por minuto","Bajo por mezcla","Banda por micrófono"],ans:1,exp:"BPM significa Beats Per Minute (Batidas por Minuto), mide el tempo de la música."},
+    {q:"¿Quién cantó 'Imagine'?",opts:["Paul McCartney","George Harrison","John Lennon","Ringo Starr"],ans:2,exp:"Imagine fue compuesta y grabada por John Lennon en 1971."},
+    {q:"¿Qué banda tocaba Jimmy Page?",opts:["Deep Purple","Black Sabbath","Led Zeppelin","The Who"],ans:2,exp:"Jimmy Page es el guitarrista y fundador de Led Zeppelin."},
+    {q:"¿En qué tonalidad está el himno nacional español?",opts:["Do mayor","Sol mayor","Fa mayor","Re mayor"],ans:1,exp:"La Marcha Real española está en Sol mayor."},
+    {q:"¿Qué instrumento de viento madera es el más agudo?",opts:["Flauta","Oboe","Clarinete","Flautín"],ans:3,exp:"El flautín o piccolo es el instrumento de viento madera más agudo de la orquesta."},
+    {q:"¿Quién compuso 'El Mesías'?",opts:["Bach","Vivaldi","Handel","Haydn"],ans:2,exp:"Georg Friedrich Handel compuso El Mesías en 1741 en tan solo 24 días."},
+    {q:"¿Qué es la síncopa en música?",opts:["Acorde disonante","Acentuación en tiempo débil","Escala cromática","Instrumento de percusión"],ans:1,exp:"La síncopa es la acentuación de un tiempo débil o la parte débil de un tiempo."},
+    {q:"¿Qué cantante colombiana es conocida mundialmente por sus caderas?",opts:["Karol G","Maluma","J Balvin","Shakira"],ans:3,exp:"Shakira es famosa por su frase 'Las caderas no mienten' y sus bailes."},
+    {q:"¿Qué banda lanzó 'Hotel California'?",opts:["Fleetwood Mac","The Eagles","Lynyrd Skynyrd","Creedence Clearwater"],ans:1,exp:"Hotel California es la canción más famosa de The Eagles (1977)."},
+    {q:"¿Qué es un leit motiv?",opts:["Instrumentación especial","Motivo musical asociado a personaje o idea","Tipo de escala","Forma de composición"],ans:1,exp:"Un leit motiv es un tema musical que representa a un personaje, lugar o idea."},
+    {q:"¿Quién inventó el fonógrafo?",opts:["Alexander Bell","Guglielmo Marconi","Thomas Edison","Nikola Tesla"],ans:2,exp:"Thomas Edison inventó el fonógrafo en 1877, el primer dispositivo de reproducción de sonido."},
+    {q:"¿Qué tipo de voz masculina es la más aguda?",opts:["Barítono","Bajo","Tenor","Contratenor"],ans:3,exp:"El contratenor es el tipo de voz masculina más aguda, usando la voz de falsete."},
+    {q:"¿Qué banda de rock español era liderada por Enrique Urquijo?",opts:["Hombres G","Mecano","Los Secretos","Burning"],ans:2,exp:"Los Secretos fue una banda de pop-rock liderada por los hermanos Urquijo."},
+    {q:"¿Quién compuso 'Carmen'?",opts:["Verdi","Bizet","Puccini","Rossini"],ans:1,exp:"Georges Bizet compuso la ópera Carmen en 1875."},
+    {q:"¿Qué es el jazz?",opts:["Música clásica americana","Género musical de origen afroamericano","Música country moderna","Estilo de blues eléctrico"],ans:1,exp:"El jazz es un género musical de origen afroamericano desarrollado en Nueva Orleans a finales del siglo XIX."},
+    {q:"¿Cuántos movimientos tiene una sinfonía clásica estándar?",opts:["2","3","4","5"],ans:2,exp:"Una sinfonía clásica estándar tiene 4 movimientos."},
+    {q:"¿Qué artista lanzó 'Thriller' y 'Bad'?",opts:["Prince","David Bowie","Stevie Wonder","Michael Jackson"],ans:3,exp:"Michael Jackson lanzó Thriller (1982) y Bad (1987), dos de los álbumes más vendidos de la historia."},
+    {q:"¿Qué es el contrapunto en música?",opts:["Técnica de voces independientes","Tipo de ritmo","Instrumento de percusión","Acorde específico"],ans:0,exp:"El contrapunto es la técnica de combinar líneas melódicas independientes."},
+    {q:"¿Quién cantó 'My Way'?",opts:["Dean Martin","Sammy Davis Jr.","Nat King Cole","Frank Sinatra"],ans:3,exp:"My Way es la canción más asociada a Frank Sinatra, aunque fue compuesta por Paul Anka."},
+    {q:"¿Qué movimiento musical español fue conocido como 'la nueva ola'?",opts:["Movida Madrileña","Rock andaluz","Flamenco nuevo","Pop catalán"],ans:0,exp:"La Movida Madrileña fue un movimiento cultural y musical español de los años 80."},
+    {q:"¿Cuántos compases tiene el blues estándar?",opts:["8","10","12","16"],ans:2,exp:"El blues estándar tiene 12 compases, siguiendo una progresión de acordes específica."},
+    {q:"¿Qué cantante español es conocido por canciones como 'La Bamba'?",opts:["Julio Iglesias","Plácido Domingo","José Feliciano","Ritchie Valens"],ans:3,exp:"Ritchie Valens popularizó 'La Bamba' en 1958."},
+  ],
+  tecnologia: [
+    {q:"¿En qué año se fundó Apple?",opts:["1972","1974","1976","1980"],ans:2,exp:"Apple fue fundada el 1 de abril de 1976."},
+    {q:"¿Qué significa HTML?",opts:["HyperText Markup Language","High Text Machine Language","HyperTransfer Markup Link","Hybrid Text Media Language"],ans:0,exp:"HTML es el lenguaje estándar para crear páginas web."},
+    {q:"¿Quién inventó el World Wide Web?",opts:["Steve Jobs","Bill Gates","Tim Berners-Lee","Vint Cerf"],ans:2,exp:"Tim Berners-Lee inventó la WWW en 1989 en el CERN."},
+    {q:"¿Cuántos bits tiene un byte?",opts:["4","8","16","32"],ans:1,exp:"Un byte está compuesto por 8 bits."},
+    {q:"¿Qué empresa creó Android?",opts:["Samsung","Google","Microsoft","Nokia"],ans:1,exp:"Google adquirió Android Inc. en 2005 y lanzó Android en 2008."},
+    {q:"¿Qué lenguaje de programación creó Guido van Rossum?",opts:["Java","Ruby","Python","Perl"],ans:2,exp:"Guido van Rossum creó Python en 1991."},
+    {q:"¿Qué significa CPU?",opts:["Central Processing Unit","Computer Program Utility","Central Program Update","Core Processing Unit"],ans:0,exp:"La CPU es el componente principal que ejecuta instrucciones."},
+    {q:"¿En qué año se lanzó el primer iPhone?",opts:["2005","2006","2007","2008"],ans:2,exp:"El primer iPhone fue presentado por Steve Jobs el 9 de enero de 2007."},
+    {q:"¿Cuál es el buscador más utilizado?",opts:["Bing","Yahoo","DuckDuckGo","Google"],ans:3,exp:"Google controla más del 90% del mercado de búsquedas mundial."},
+    {q:"¿Qué protocolo se usa para enviar emails?",opts:["HTTP","FTP","SMTP","SSH"],ans:2,exp:"SMTP es el protocolo estándar para el envío de correos electrónicos."},
+    {q:"¿Quién cofundó Microsoft con Bill Gates?",opts:["Paul Allen","Steve Ballmer","Charles Simonyi","Gordon Bell"],ans:0,exp:"Paul Allen cofundó Microsoft con Gates en 1975."},
+    {q:"¿Qué es el open source?",opts:["Software privado","Software con código público","Software de pago","Software sin updates"],ans:1,exp:"El software de código abierto permite ver, modificar y distribuir su código."},
+    {q:"¿Qué significa WiFi?",opts:["Wireless Fidelity","Wide Frequency Interface","Wireless Frequency Internet","World Fiber Interface"],ans:0,exp:"WiFi significa Wireless Fidelity, aunque es principalmente una marca registrada."},
+    {q:"¿En qué año se fundó Google?",opts:["1996","1997","1998","2000"],ans:2,exp:"Google fue fundada el 4 de septiembre de 1998 por Larry Page y Sergey Brin."},
+    {q:"¿Qué significa USB?",opts:["Universal Serial Bus","Unified System Bridge","Ultra Speed Bandwidth","Universal Storage Base"],ans:0,exp:"USB significa Universal Serial Bus, un estándar de conexión de dispositivos."},
+    {q:"¿Cuál fue el primer videojuego comercial?",opts:["Pong","Space Invaders","Pac-Man","Tetris"],ans:0,exp:"Pong fue el primer videojuego de arcade comercialmente exitoso, lanzado por Atari en 1972."},
+    {q:"¿Qué empresa fundó Elon Musk antes de Tesla?",opts:["SpaceX","PayPal","Zip2","SolarCity"],ans:1,exp:"Elon Musk cofundó PayPal (originalmente X.com) antes de fundar SpaceX y Tesla."},
+    {q:"¿Cuántos transistores tiene un chip moderno?",opts:["Millones","Miles de millones","Billones","Miles"],ans:1,exp:"Los chips modernos tienen decenas de miles de millones de transistores."},
+    {q:"¿Qué significa RAM?",opts:["Random Access Memory","Rapid Application Module","Read And Modify","Real Array Memory"],ans:0,exp:"RAM significa Random Access Memory, la memoria de acceso aleatorio del ordenador."},
+    {q:"¿En qué año se fundó Amazon?",opts:["1992","1993","1994","1995"],ans:2,exp:"Jeff Bezos fundó Amazon el 5 de julio de 1994."},
+    {q:"¿Qué lenguaje de programación es más usado para web?",opts:["Python","Java","C++","JavaScript"],ans:3,exp:"JavaScript es el lenguaje más usado en desarrollo web, ejecutándose en el navegador."},
+    {q:"¿Qué empresa desarrolló el sistema operativo Windows?",opts:["Apple","IBM","Microsoft","Intel"],ans:2,exp:"Microsoft desarrolló Windows, el sistema operativo más usado en el mundo."},
+    {q:"¿Qué significa IoT?",opts:["Internet of Things","Integrated Online Technology","Input Output Transfer","Internet Open Terminal"],ans:0,exp:"IoT (Internet of Things) es la red de dispositivos físicos conectados a internet."},
+    {q:"¿En qué año se lanzó el primer Android?",opts:["2006","2007","2008","2009"],ans:2,exp:"El primer teléfono con Android, el HTC Dream, se lanzó en 2008."},
+    {q:"¿Qué es el machine learning?",opts:["Programación manual","Aprendizaje automático de IA","Proceso de compilación","Tipo de base de datos"],ans:1,exp:"El machine learning es un campo de la IA donde los sistemas aprenden de los datos."},
+    {q:"¿Cuántos bits tiene una dirección IPv4?",opts:["16","32","64","128"],ans:1,exp:"Una dirección IPv4 tiene 32 bits, expresados en cuatro grupos de 8 bits."},
+    {q:"¿Qué empresa creó el procesador Intel Core i7?",opts:["AMD","IBM","Intel","Qualcomm"],ans:2,exp:"Intel Corporation fabrica los procesadores Core i7."},
+    {q:"¿Qué es el algoritmo?",opts:["Tipo de base de datos","Secuencia de instrucciones para resolver un problema","Lenguaje de programación","Sistema operativo"],ans:1,exp:"Un algoritmo es un conjunto de instrucciones paso a paso para resolver un problema."},
+    {q:"¿En qué año se lanzó el primer MacBook?",opts:["2004","2005","2006","2007"],ans:2,exp:"El MacBook original fue lanzado en mayo de 2006."},
+    {q:"¿Qué significa VPN?",opts:["Virtual Private Network","Very Personal Node","Video Processing Network","Verified Public Node"],ans:0,exp:"VPN significa Virtual Private Network, una red privada virtual para conexiones seguras."},
+    {q:"¿Quién creó Linux?",opts:["Richard Stallman","Bill Gates","Linus Torvalds","Dennis Ritchie"],ans:2,exp:"Linus Torvalds creó el kernel de Linux en 1991 siendo estudiante en Finlandia."},
+    {q:"¿Qué es el blockchain?",opts:["Tipo de procesador","Registro distribuido e inmutable","Red social","Sistema operativo"],ans:1,exp:"El blockchain es un registro distribuido e inmutable de transacciones."},
+    {q:"¿En qué año se fundó Facebook?",opts:["2002","2003","2004","2005"],ans:2,exp:"Mark Zuckerberg fundó Facebook el 4 de febrero de 2004 desde Harvard."},
+    {q:"¿Qué empresa fabrica los chips M1 y M2?",opts:["Intel","Qualcomm","Apple","ARM"],ans:2,exp:"Apple diseña sus propios chips de la serie M para sus ordenadores Mac."},
+    {q:"¿Qué significa GPU?",opts:["General Processing Unit","Graphics Processing Unit","Global Program Update","Grid Parallel Unit"],ans:1,exp:"GPU significa Graphics Processing Unit, especializada en procesamiento gráfico."},
+    {q:"¿Cuál fue el primer lenguaje de programación?",opts:["FORTRAN","COBOL","Assembler","Ada Lovelace's notes"],ans:0,exp:"FORTRAN (1957) es considerado el primer lenguaje de programación de alto nivel."},
+    {q:"¿Qué es una cookie en internet?",opts:["Archivo de contraseñas","Pequeño archivo de datos del navegador","Tipo de malware","Protocolo de seguridad"],ans:1,exp:"Las cookies son pequeños archivos que los sitios web guardan en el navegador del usuario."},
+    {q:"¿En qué año se lanzó Netflix como servicio de streaming?",opts:["2005","2006","2007","2008"],ans:2,exp:"Netflix lanzó su servicio de streaming de vídeo en 2007, antes solo era alquiler de DVDs."},
+    {q:"¿Qué empresa creó el lenguaje Java?",opts:["Microsoft","Apple","Sun Microsystems","IBM"],ans:2,exp:"Sun Microsystems creó Java en 1995. Ahora es propiedad de Oracle."},
+    {q:"¿Qué es el phishing?",opts:["Técnica de hacking","Engaño para robar datos","Tipo de virus","Protocolo de red"],ans:1,exp:"El phishing es una técnica de engaño que imita páginas legítimas para robar información."},
+    {q:"¿Cuántos megabytes hay en un gigabyte?",opts:["100","512","1.000","1.024"],ans:3,exp:"Hay 1.024 megabytes en un gigabyte (en binario)."},
+    {q:"¿Qué es la nube en tecnología?",opts:["Almacenamiento físico local","Servidores remotos accesibles por internet","Red local","Sistema operativo"],ans:1,exp:"La nube son servidores remotos en internet donde se almacenan y procesan datos."},
+    {q:"¿Quién fundó Tesla?",opts:["Solo Elon Musk","Martin Eberhard y Marc Tarpenning","Elon Musk y Peter Thiel","Jeffrey Straubel"],ans:1,exp:"Tesla fue fundada en 2003 por Martin Eberhard y Marc Tarpenning. Elon Musk se unió después."},
+    {q:"¿Qué es un servidor?",opts:["Tipo de ordenador","Ordenador que provee servicios a otros","Software de red","Protocolo de internet"],ans:1,exp:"Un servidor es un ordenador o programa que proporciona servicios a otros ordenadores en una red."},
+    {q:"¿En qué año nació Internet público?",opts:["1983","1989","1991","1993"],ans:2,exp:"La World Wide Web se abrió al público en 1991, aunque ARPANET existía desde los 60."},
+    {q:"¿Qué significa SSD?",opts:["Super Speed Drive","Solid State Drive","Secondary Storage Device","System Software Disk"],ans:1,exp:"SSD significa Solid State Drive, un disco duro sin partes móviles, más rápido que el HDD."},
+    {q:"¿Qué empresa desarrolló el PlayStation?",opts:["Nintendo","Microsoft","Sega","Sony"],ans:3,exp:"Sony lanzó la primera PlayStation en 1994 en Japón."},
+    {q:"¿Qué es el DNS?",opts:["Digital Network System","Domain Name System","Data Node Service","Direct Network Signal"],ans:1,exp:"DNS (Domain Name System) traduce nombres de dominio en direcciones IP."},
+    {q:"¿Cuál fue la primera red social masiva?",opts:["Facebook","MySpace","Friendster","Hi5"],ans:1,exp:"MySpace fue la primera red social masiva, dominando de 2005 a 2008."},
+    {q:"¿Qué es el código QR?",opts:["Código de barras unidimensional","Código de barras bidimensional","Protocolo de seguridad","Formato de imagen"],ans:1,exp:"El código QR (Quick Response) es un código de barras bidimensional que almacena información."},
+  ],
+  arte: [
+    {q:"¿Quién pintó la Mona Lisa?",opts:["Miguel Ángel","Rafael","Leonardo da Vinci","Botticelli"],ans:2,exp:"Leonardo da Vinci pintó la Mona Lisa entre 1503 y 1519."},
+    {q:"¿Qué museo alberga la Mona Lisa?",opts:["Prado","British Museum","Louvre","Uffizi"],ans:2,exp:"La Mona Lisa está en el Museo del Louvre en París."},
+    {q:"¿Quién esculpió 'El pensador'?",opts:["Bernini","Michelangelo","Rodin","Brancusi"],ans:2,exp:"Auguste Rodin esculpió El pensador en 1880."},
+    {q:"¿Qué movimiento artístico lideró Salvador Dalí?",opts:["Cubismo","Expresionismo","Surrealismo","Dadaísmo"],ans:2,exp:"Salvador Dalí fue uno de los máximos exponentes del surrealismo."},
+    {q:"¿Quién pintó 'La noche estrellada'?",opts:["Gauguin","Monet","Van Gogh","Seurat"],ans:2,exp:"Vincent van Gogh pintó La noche estrellada en 1889 desde el manicomio de Saint-Rémy."},
+    {q:"¿Qué artista español es conocido por el cubismo?",opts:["Dalí","Miró","Picasso","Gris"],ans:2,exp:"Pablo Picasso fue uno de los fundadores del cubismo junto a Georges Braque."},
+    {q:"¿Quién pintó el techo de la Capilla Sixtina?",opts:["Rafael","Leonardo","Miguel Ángel","Botticelli"],ans:2,exp:"Miguel Ángel pintó el techo de la Capilla Sixtina entre 1508 y 1512."},
+    {q:"¿Qué es el impresionismo?",opts:["Arte medieval","Movimiento artístico del XIX que capta la luz","Arte abstracto moderno","Estilo gráfico digital"],ans:1,exp:"El impresionismo es un movimiento artístico del siglo XIX que busca captar las impresiones lumínicas."},
+    {q:"¿Quién pintó 'Las Meninas'?",opts:["El Greco","Velázquez","Goya","Murillo"],ans:1,exp:"Diego Velázquez pintó Las Meninas en 1656, una de las obras más analizadas de la historia."},
+    {q:"¿Dónde está el museo del Prado?",opts:["Barcelona","Sevilla","Madrid","Valencia"],ans:2,exp:"El Museo del Prado está en Madrid y es uno de los museos más importantes del mundo."},
+    {q:"¿Quién pintó 'El jardín de las delicias'?",opts:["Bruegel","Bosch","Durero","Cranach"],ans:1,exp:"El Bosco (Hieronymus Bosch) pintó El jardín de las delicias a principios del siglo XVI."},
+    {q:"¿Qué es el barroco?",opts:["Estilo minimalista","Estilo artístico del XVII recargado y dramático","Arte abstracto","Movimiento contemporáneo"],ans:1,exp:"El barroco es un estilo artístico del siglo XVII caracterizado por la ornamentación y el dramatismo."},
+    {q:"¿Quién esculpió 'El David'?",opts:["Bernini","Donatello","Verrocchio","Miguel Ángel"],ans:3,exp:"Miguel Ángel esculpió el David entre 1501 y 1504."},
+    {q:"¿Qué artista noruego pintó 'El grito'?",opts:["Munch","Sisley","Pissarro","Klimt"],ans:0,exp:"Edvard Munch pintó El grito en 1893."},
+    {q:"¿Qué movimiento inició Andy Warhol?",opts:["Arte conceptual","Pop Art","Minimalismo","Expresionismo abstracto"],ans:1,exp:"Andy Warhol fue el principal exponente del Pop Art, movimiento que elevó la cultura popular a arte."},
+    {q:"¿Quién pintó 'La persistencia de la memoria'?",opts:["Magritte","Ernst","Dalí","Chirico"],ans:2,exp:"Salvador Dalí pintó La persistencia de la memoria en 1931."},
+    {q:"¿Qué artista holandesa pintó interiores domésticos en el XVII?",opts:["Rembrandt","Vermeer","Hals","Steen"],ans:1,exp:"Johannes Vermeer es famoso por sus pinturas de interiores con luz natural."},
+    {q:"¿Dónde está el museo Guggenheim más famoso?",opts:["Nueva York","Venecia","Bilbao","Berlín"],ans:0,exp:"El Guggenheim original está en Nueva York, diseñado por Frank Lloyd Wright."},
+    {q:"¿Quién pintó 'Guernica'?",opts:["Miró","Dalí","Picasso","Gris"],ans:2,exp:"Pablo Picasso pintó Guernica en 1937 en respuesta al bombardeo de la ciudad vasca."},
+    {q:"¿Qué técnica usa el fresco?",opts:["Óleo sobre lienzo","Pigmentos sobre yeso húmedo","Acuarela","Esmalte"],ans:1,exp:"El fresco es una técnica pictórica que aplica pigmentos sobre yeso húmedo."},
+    {q:"¿Quién pintó 'Impresión, sol naciente'?",opts:["Renoir","Degas","Manet","Monet"],ans:3,exp:"Claude Monet pintó Impresión, sol naciente en 1872, dando nombre al movimiento impresionista."},
+    {q:"¿Qué es la perspectiva en arte?",opts:["Técnica de color","Representación tridimensional en superficie plana","Tipo de pintura","Estilo medieval"],ans:1,exp:"La perspectiva es una técnica para representar objetos tridimensionales en una superficie bidimensional."},
+    {q:"¿Quién diseñó la Sagrada Família?",opts:["Le Corbusier","Frank Lloyd Wright","Gaudí","Mies van der Rohe"],ans:2,exp:"Antoni Gaudí diseñó la Sagrada Família, que sigue en construcción desde 1882."},
+    {q:"¿Qué artista es conocido por los 'drip paintings'?",opts:["Mark Rothko","Willem de Kooning","Jackson Pollock","Franz Kline"],ans:2,exp:"Jackson Pollock era famoso por su técnica de derramar pintura sobre el lienzo."},
+    {q:"¿En qué ciudad está la Galería Uffizi?",opts:["Roma","Venecia","Nápoles","Florencia"],ans:3,exp:"Los Uffizi están en Florencia, Italia, y albergan obras del Renacimiento italiano."},
+    {q:"¿Quién pintó 'El nacimiento de Venus'?",opts:["Raphael","Da Vinci","Botticelli","Fra Angelico"],ans:2,exp:"Sandro Botticelli pintó El nacimiento de Venus alrededor de 1485."},
+    {q:"¿Qué es el chiaroscuro?",opts:["Técnica de mosaico","Contraste luz y sombra","Tipo de escultura","Estilo de acuarela"],ans:1,exp:"El chiaroscuro es la técnica pictórica que usa el contraste entre luz y sombra."},
+    {q:"¿Quién esculpió 'La Pietà'?",opts:["Bernini","Donatello","Canova","Miguel Ángel"],ans:3,exp:"Miguel Ángel esculpió La Pietà en 1499, cuando tenía solo 24 años."},
+    {q:"¿Qué artista belga pintó imágenes con pipas que decían 'esto no es una pipa'?",opts:["Ensor","Delvaux","Magritte","Wouters"],ans:2,exp:"René Magritte pintó La traición de las imágenes (1929), famosa por su juego conceptual."},
+    {q:"¿Qué es la acuarela?",opts:["Técnica con pigmentos al aceite","Pintura con pigmentos disueltos en agua","Técnica de escultura","Grabado en metal"],ans:1,exp:"La acuarela es una técnica que usa pigmentos solubles en agua sobre papel."},
+    {q:"¿Quién pintó 'Los girasoles'?",opts:["Gauguin","Monet","Renoir","Van Gogh"],ans:3,exp:"Vincent van Gogh pintó la serie de Los girasoles en 1888 en Arlés."},
+    {q:"¿Qué movimiento artístico rechazaba el arte tradicional después de la Primera Guerra Mundial?",opts:["Futurismo","Dadaísmo","Constructivismo","Art Déco"],ans:1,exp:"El Dadaísmo nació en Zúrich en 1916 como rechazo al racionalismo que había llevado a la guerra."},
+    {q:"¿Quién diseñó el Centro Pompidou en París?",opts:["Frank Gehry","Zaha Hadid","Renzo Piano y Richard Rogers","Norman Foster"],ans:2,exp:"El Centro Pompidou fue diseñado por Renzo Piano y Richard Rogers, inaugurado en 1977."},
+    {q:"¿Qué artista mexicana pintó muchos autorretratos?",opts:["Leonora Carrington","María Izquierdo","Rufino Tamayo","Frida Kahlo"],ans:3,exp:"Frida Kahlo pintó 55 autorretratos de los 143 cuadros que componen su obra."},
+    {q:"¿Qué es el gótico en arte?",opts:["Estilo romano clásico","Estilo medieval con arcos apuntados","Arte nórdico moderno","Movimiento surrealista"],ans:1,exp:"El gótico es un estilo medieval que se caracteriza por arcos apuntados, vidrieras y torres."},
+    {q:"¿Quién pintó 'La ronda nocturna'?",opts:["Vermeer","Hals","Rembrandt","Rubens"],ans:2,exp:"Rembrandt pintó La ronda nocturna en 1642, su obra más famosa."},
+    {q:"¿Dónde está el museo Hermitage?",opts:["Moscú","Kiev","Varsovia","San Petersburgo"],ans:3,exp:"El Museo Hermitage está en San Petersburgo, Rusia, y es uno de los más grandes del mundo."},
+    {q:"¿Qué artista es famoso por sus serigrafías de Marilyn Monroe?",opts:["Roy Lichtenstein","Robert Rauschenberg","Andy Warhol","Jasper Johns"],ans:2,exp:"Andy Warhol creó las icónicas serigrafías de Marilyn Monroe en 1962."},
+    {q:"¿Qué arquitecto español diseñó el Palau de la Música Catalana?",opts:["Gaudí","Domènech i Montaner","Puig i Cadafalch","Jujol"],ans:1,exp:"Lluís Domènech i Montaner diseñó el Palau de la Música Catalana (1905-1908)."},
+    {q:"¿Qué es el óleo?",opts:["Pigmentos disueltos en agua","Pigmentos mezclados con aceite","Técnica de fresco","Pintura de acuarela"],ans:1,exp:"El óleo es una técnica pictórica que usa pigmentos mezclados con aceites secantes."},
+    {q:"¿Quién pintó 'El Greco' originalmente?",opts:["Domenikos Theotokopoulos","Diego Velázquez","Pedro Berruguete","Juan Pantoja"],ans:0,exp:"El Greco era el apodo de Domenikos Theotokopoulos, pintor griego afincado en Toledo."},
+    {q:"¿Qué movimiento artístico usó el goteo y la acción?",opts:["Pop Art","Minimalismo","Expresionismo abstracto","Hiperrealismo"],ans:2,exp:"El expresionismo abstracto o Action Painting fue un movimiento de los años 40-50."},
+    {q:"¿Quién esculpió 'La Venus de Milo'?",opts:["Fidias","Praxíteles","Alejandro de Antioquía","Lisipo"],ans:2,exp:"Se cree que la Venus de Milo fue esculpida por Alejandro de Antioquía alrededor del 130 a.C."},
+    {q:"¿Qué artista catalán es conocido por sus pinturas de manchas de colores?",opts:["Dalí","Tàpies","Miró","Saura"],ans:2,exp:"Joan Miró es famoso por sus formas abstractas y colores primarios vibrantes."},
+    {q:"¿Dónde está el museo MoMA?",opts:["Los Ángeles","Chicago","Boston","Nueva York"],ans:3,exp:"El Museum of Modern Art (MoMA) está en Nueva York."},
+    {q:"¿Qué es el neoclasicismo?",opts:["Estilo barroco tardío","Retorno a las formas clásicas grecolatinas","Arte moderno abstracto","Estilo decorativo oriental"],ans:1,exp:"El neoclasicismo es un movimiento del siglo XVIII que recupera la estética de Grecia y Roma."},
+    {q:"¿Quién pintó 'La libertad guiando al pueblo'?",opts:["Ingres","David","Géricault","Delacroix"],ans:3,exp:"Eugène Delacroix pintó La libertad guiando al pueblo en 1830."},
+    {q:"¿Qué artista holandés es famoso por sus grabados matemáticos imposibles?",opts:["Mondrian","Van Gogh","Escher","Haring"],ans:2,exp:"M.C. Escher es famoso por sus grabados con figuras imposibles y juegos matemáticos."},
+    {q:"¿Qué es la escultura en relieve?",opts:["Escultura exenta","Figura proyectada desde superficie plana","Instalación artística","Técnica de vaciado"],ans:1,exp:"El relieve es una escultura proyectada desde una superficie plana, puede ser bajo, medio o alto relieve."},
+    {q:"¿Quién diseñó el Guggenheim de Bilbao?",opts:["Renzo Piano","Norman Foster","Frank Gehry","Zaha Hadid"],ans:2,exp:"Frank Gehry diseñó el Guggenheim Bilbao, inaugurado en 1997."},
+    {q:"¿Qué artista austriaco pintó 'El beso'?",opts:["Schiele","Kokoschka","Klimt","Moser"],ans:2,exp:"Gustav Klimt pintó El beso en 1907-1908, obra emblemática del modernismo vienés."},
+  ],
+  naturaleza: [
+    {q:"¿Cuántas especies de plantas hay aproximadamente?",opts:["100.000","200.000","391.000","500.000"],ans:2,exp:"Se estiman unas 391.000 especies de plantas vasculares en el mundo."},
+    {q:"¿Qué árbol vive más tiempo?",opts:["Secuoya","Olivo","Pino Bristlecone","Baobab"],ans:2,exp:"El pino Bristlecone puede vivir más de 5.000 años, siendo el árbol más longevo."},
+    {q:"¿Qué animal tiene la lengua más larga?",opts:["Camaleón","Oso hormiguero","Jirafa","Rana toro"],ans:1,exp:"El oso hormiguero tiene la lengua más larga relativa a su cuerpo, hasta 60 cm."},
+    {q:"¿Cuál es el pez más grande del mundo?",opts:["Ballena azul","Gran tiburón blanco","Tiburón ballena","Mantarraya"],ans:2,exp:"El tiburón ballena puede medir hasta 18 metros y es el pez más grande, aunque es inofensivo."},
+    {q:"¿Qué planta carnívora es más conocida?",opts:["Sarracenia","Nepenthes","Venus atrapamoscas","Drosera"],ans:2,exp:"La Venus atrapamoscas es la planta carnívora más conocida, nativa de Carolina del Norte."},
+    {q:"¿Cuántos años vive un elefante africano?",opts:["40-50","50-60","60-70","70-80"],ans:2,exp:"Los elefantes africanos viven entre 60 y 70 años en estado salvaje."},
+    {q:"¿Qué animal produce la miel?",opts:["Abeja","Avispa","Abejorro","Hormiga"],ans:0,exp:"Las abejas melíferas producen miel a partir del néctar de las flores."},
+    {q:"¿Cuál es el mamífero más rápido?",opts:["León","Guepardo","Pronghorn","Gacela"],ans:1,exp:"El guepardo puede alcanzar los 120 km/h, siendo el mamífero terrestre más veloz."},
+    {q:"¿Qué es la fotosíntesis?",opts:["Proceso digestivo","Conversión de luz en energía química","Reproducción celular","Proceso respiratorio"],ans:1,exp:"La fotosíntesis convierte la luz solar, CO2 y agua en glucosa y oxígeno."},
+    {q:"¿Cuántas especies de insectos se conocen?",opts:["500.000","800.000","1 millón","2 millones"],ans:2,exp:"Se han descrito alrededor de 1 millón de especies de insectos, que representan el 80% de los animales."},
+    {q:"¿Qué animal tiene más corazones?",opts:["Pulpo (3)","Gusano de tierra (5)","Calamar (3)","Medusa (0)"],ans:0,exp:"El pulpo tiene 3 corazones: uno sistémico y dos branquiales."},
+    {q:"¿Cuál es el veneno animal más potente?",opts:["Cobra real","Mamba negra","Medusa de caja","Taipán del interior"],ans:3,exp:"El taipán del interior es la serpiente más venenosa del mundo."},
+    {q:"¿Qué porcentaje del oxígeno produce el océano?",opts:["20%","35%","50%","70%"],ans:2,exp:"El océano produce aproximadamente el 50-80% del oxígeno de la Tierra."},
+    {q:"¿Cuánto tiempo vive una mariposa?",opts:["Días","Semanas","Meses","Un año"],ans:1,exp:"La mayoría de mariposas adultas viven entre 2 y 4 semanas, aunque algunas hasta 9 meses."},
+    {q:"¿Qué animal puede regenerar partes de su cuerpo?",opts:["Lagarto","Axolotl","Planaria","Todos los anteriores"],ans:3,exp:"Todos ellos pueden regenerar partes del cuerpo: lagartos regeneran colas, axolotls regeneran extremidades."},
+    {q:"¿Cuál es el sonido más alto del reino animal?",opts:["León","Elefante","Ballena azul","Cachalote"],ans:2,exp:"La ballena azul produce sonidos de hasta 188 decibelios, los más altos del reino animal."},
+    {q:"¿Qué árbol produce el fruto más grande?",opts:["Coco","Breadfruit","Jackfruit","Durian"],ans:2,exp:"El jackfruit produce los frutos más grandes de todos los árboles, pudiendo pesar hasta 50 kg."},
+    {q:"¿Cuántas abejas hay en una colmena?",opts:["5.000-10.000","20.000-40.000","50.000-80.000","100.000+"],ans:2,exp:"Una colmena típica tiene entre 50.000 y 80.000 abejas en su punto máximo."},
+    {q:"¿Qué animal tiene la piel más gruesa?",opts:["Rinoceronte","Hipopótamo","Elefante","Cocodrilo"],ans:1,exp:"El hipopótamo tiene la piel más gruesa entre los mamíferos terrestres, hasta 5 cm."},
+    {q:"¿Cuánto tiempo puede vivir una tortuga gigante?",opts:["80 años","120 años","150 años","200 años"],ans:3,exp:"Las tortugas gigantes de Galápagos pueden vivir más de 200 años."},
+    {q:"¿Qué es la ecología?",opts:["Estudio de los fósiles","Ciencia de las relaciones entre seres vivos y entorno","Estudio de los genes","Ciencia de los minerales"],ans:1,exp:"La ecología estudia las relaciones entre los organismos vivos y su entorno."},
+    {q:"¿Cuál es el insecto más pequeño del mundo?",opts:["Piojo","Pulga","Avispa Fairyfly","Ácaro"],ans:2,exp:"La avispa mymarid (Fairyfly) mide solo 0,139 mm, siendo el insecto más pequeño conocido."},
+    {q:"¿Qué tipo de árbol es la secuoya?",opts:["Angiosperma","Gimnosperma (conífera)","Pteridofita","Briofita"],ans:1,exp:"La secuoya es una gimnosperma, grupo que incluye las coníferas."},
+    {q:"¿Cuántos pulmones tiene un anfibio adulto?",opts:["0","1","2","Puede variar"],ans:3,exp:"Algunos anfibios tienen pulmones rudimentarios, otros respiran por la piel; depende de la especie."},
+    {q:"¿Qué animal emigra la distancia más larga?",opts:["Golondrina ártica","Ballena jorobada","Mariposa monarca","Tortuga laúd"],ans:0,exp:"El charrán ártico migra hasta 70.000 km por año entre el Ártico y el Antártico."},
+    {q:"¿Cuál es el reptil más grande?",opts:["Anaconda","Pitón reticulada","Cocodrilo marino","Cocodrilo del Nilo"],ans:2,exp:"El cocodrilo marino puede medir hasta 7 metros y pesar 1.000 kg."},
+    {q:"¿Qué proceso natural recicla el carbono?",opts:["Ciclo del agua","Ciclo del carbono","Eutrofización","Desertización"],ans:1,exp:"El ciclo del carbono es el proceso biogeoquímico que recicla el carbono en los ecosistemas."},
+    {q:"¿Cuántos años puede vivir un loro?",opts:["20-30","40-60","60-80","80-100"],ans:2,exp:"Los loros grandes como el guacamayo pueden vivir entre 60 y 80 años."},
+    {q:"¿Qué es la bioluminiscencia?",opts:["Reflexión de luz","Producción de luz por organismos vivos","Fluorescencia","Fotosíntesis nocturna"],ans:1,exp:"La bioluminiscencia es la producción de luz fría por organismos mediante reacciones químicas."},
+    {q:"¿Cuál es el animal más venenoso del mundo?",opts:["Cobra real","Medusa de caja","Taipán","Rana dardo"],ans:1,exp:"La medusa de caja puede matar a una persona en minutos y es el animal más venenoso conocido."},
+    {q:"¿Qué porcentaje de la biodiversidad está en las selvas tropicales?",opts:["25%","40%","50%","80%"],ans:3,exp:"Las selvas tropicales albergan más del 80% de las especies terrestres conocidas."},
+    {q:"¿Cuánto tiempo puede aguantar bajo el agua una ballena?",opts:["20 min","45 min","90 min","2 horas"],ans:2,exp:"Los cachalotes pueden permanecer sumergidos hasta 90 minutos en sus inmersiones más profundas."},
+    {q:"¿Qué árbol produce el corcho?",opts:["Alcornoque","Haya","Roble","Encina"],ans:0,exp:"El corcho se obtiene de la corteza del alcornoque, árbol nativo del Mediterráneo occidental."},
+    {q:"¿Cuál es el animal más inteligente después del humano?",opts:["Delfín","Chimpancé","Elefante","Cuervo"],ans:1,exp:"El chimpancé tiene el ADN más similar al humano (98,7%) y es considerado el más inteligente."},
+    {q:"¿Qué es el coral?",opts:["Planta marina","Animal coralino colonial","Mineral marino","Alga"],ans:1,exp:"Los corales son animales marinos coloniales relacionados con las medusas y anémonas."},
+    {q:"¿Cuántos ojos tiene una araña?",opts:["2","4","6","8"],ans:3,exp:"La mayoría de arañas tienen 8 ojos, aunque algunas especies tienen menos."},
+    {q:"¿Qué planta produce el oxígeno más eficientemente?",opts:["Secuoya","Algas marinas","Bambú","Kelp"],ans:1,exp:"Las microalgas marinas son los organismos más eficientes en la producción de oxígeno."},
+    {q:"¿Cuál es el pájaro más pequeño del mundo?",opts:["Colibrí zunzún","Colibrí abeja","Reyezuelo","Petirrojo"],ans:1,exp:"El colibrí abeja de Cuba mide solo 5-6 cm y es el pájaro más pequeño del mundo."},
+    {q:"¿Qué es el metano?",opts:["Gas de efecto invernadero producido por rumiantes","Solo un gas industrial","Producto de la fotosíntesis","Gas inerte"],ans:0,exp:"El metano es un potente gas de efecto invernadero producido por rumiantes y otros procesos."},
+    {q:"¿Cuántas especies de aves hay en el mundo?",opts:["5.000","7.000","10.000","15.000"],ans:2,exp:"Se conocen alrededor de 10.000 especies de aves en el mundo."},
+    {q:"¿Qué animal no bebe agua directamente?",opts:["Camello","Canguro rata","Koala","Todos los anteriores"],ans:2,exp:"El koala obtiene casi toda el agua que necesita de las hojas de eucalipto que consume."},
+    {q:"¿Cuál es el ecosistema más productivo?",opts:["Selva tropical","Pradera","Estuario","Arrecife de coral"],ans:0,exp:"Las selvas tropicales son los ecosistemas terrestres más productivos por su biomasa y diversidad."},
+    {q:"¿Qué tipo de simbiosis beneficia a ambos organismos?",opts:["Parasitismo","Comensalismo","Mutualismo","Depredación"],ans:2,exp:"El mutualismo es la relación simbiótica en la que ambas especies se benefician."},
+    {q:"¿Cuántos huevos pone una reina abeja al día?",opts:["100","500","1.000-2.000","5.000"],ans:2,exp:"Una reina abeja puede poner entre 1.000 y 2.000 huevos al día."},
+    {q:"¿Qué es la latencia en las plantas?",opts:["Muerte temporal","Estado de inactividad para sobrevivir condiciones adversas","Proceso de floración","Tipo de reproducción"],ans:1,exp:"La latencia es un estado de vida reducida que permite a las plantas sobrevivir el invierno o sequías."},
+    {q:"¿Cuál es el mamífero más pequeño del mundo?",opts:["Ratón pigmeo","Musaraña etrusca","Murciélago abejorro","Topo enano"],ans:1,exp:"La musaraña etrusca pesa solo 1,8 gramos, siendo el mamífero más pequeño por peso."},
+    {q:"¿Qué animal puede cambiar de color?",opts:["Solo el camaleón","Camaleón y pulpo","Muchos animales","Solo el calamar"],ans:2,exp:"Muchos animales cambian de color: camaleones, pulpos, calamares, lenguados, cangrejos y otros."},
+    {q:"¿Cuántos tipos de ecosistemas hay en la Tierra?",opts:["5","10","16","Cientos"],ans:3,exp:"Existen cientos de tipos de ecosistemas, aunque se agrupan en biomas principales."},
+    {q:"¿Qué es la cadena alimentaria?",opts:["Proceso digestivo","Secuencia de seres vivos que se alimentan unos de otros","Ciclo de nutrientes","Sistema de distribución"],ans:1,exp:"La cadena alimentaria muestra las relaciones de alimentación entre organismos de un ecosistema."},
+    {q:"¿Cuál es el pez más venenoso del mundo?",opts:["Pez globo","Pez piedra","Lionfish","Pez cofre"],ans:1,exp:"El pez piedra es el pez más venenoso del mundo, capaz de matar a un humano."},
+    {q:"¿Cuánto tiempo tarda un bambú en crecer?",opts:["Lentísimo","Hasta 91 cm al día","1 metro al mes","10 cm al día"],ans:1,exp:"El bambú puede crecer hasta 91 centímetros en un día, siendo la planta que crece más rápido."},
+  ],
+  gastronomia: [
+    {q:"¿De qué país es originaria la paella?",opts:["España entera","Cataluña","Valencia","Andalucía"],ans:2,exp:"La paella es originaria de Valencia, España."},
+    {q:"¿Qué es el sushi?",opts:["Solo pescado crudo","Arroz sazonado con vinagre con ingredientes variados","Plato chino","Solo mariscos"],ans:1,exp:"El sushi es arroz japonés aderezado con vinagre combinado con ingredientes variados."},
+    {q:"¿De qué país es la pizza?",opts:["Grecia","Italia","Estados Unidos","Francia"],ans:1,exp:"La pizza es originaria de Nápoles, Italia, aunque existen variantes en todo el mundo."},
+    {q:"¿Qué es el guacamole?",opts:["Salsa de tomate","Puré de aguacate","Salsa de chile","Crema de queso"],ans:1,exp:"El guacamole es una salsa mexicana hecha principalmente con aguacate machacado."},
+    {q:"¿De qué país es el croissant?",opts:["Francia","Austria","Bélgica","Suiza"],ans:1,exp:"Aunque popularizado en Francia, el croissant fue inventado en Austria como el Kipferl."},
+    {q:"¿Qué especia da color amarillo al curry?",opts:["Pimentón","Cúrcuma","Azafrán","Comino"],ans:1,exp:"La cúrcuma es la especia que da el color amarillo característico al curry."},
+    {q:"¿De qué país es el kimchi?",opts:["China","Japón","Corea","Vietnam"],ans:2,exp:"El kimchi es un fermentado coreano, principalmente de col, con especias."},
+    {q:"¿Qué bebida se hace con uvas fermentadas?",opts:["Cerveza","Vino","Sidra","Sake"],ans:1,exp:"El vino se produce mediante la fermentación del zumo de uva."},
+    {q:"¿Cuál es el queso más apestoso del mundo?",opts:["Limburger","Époisses","Vieux Boulogne","Stinking Bishop"],ans:2,exp:"El Vieux Boulogne es considerado científicamente el queso más maloliente del mundo."},
+    {q:"¿Qué es el umami?",opts:["Dulce intenso","Quinto sabor básico","Sabor ácido","Tipo de cocina"],ans:1,exp:"El umami es el quinto sabor básico, junto a dulce, salado, ácido y amargo."},
+    {q:"¿De qué país es el chocolate?",opts:["Suiza","Bélgica","México (origen)","Francia"],ans:2,exp:"El chocolate es originario de Mesoamérica, donde los aztecas ya lo consumían."},
+    {q:"¿Qué es el jamón ibérico?",opts:["Jamón de cualquier cerdo","Jamón de cerdo ibérico","Jamón italiano","Jamón curado al vacío"],ans:1,exp:"El jamón ibérico se elabora con cerdos de raza ibérica, especialmente los alimentados con bellota."},
+    {q:"¿De qué país es el salmón ahumado?",opts:["Noruega","Escocia","Escandinavia en general","Islandia"],ans:2,exp:"El salmón ahumado es tradicional de toda Escandinavia, especialmente Noruega y Escocia."},
+    {q:"¿Qué es el foie gras?",opts:["Paté de pollo","Hígado graso de pato o ganso","Embutido francés","Queso cremoso"],ans:1,exp:"El foie gras es el hígado de pato o ganso engordado mediante alimentación forzada."},
+    {q:"¿De qué país es la tortilla española?",opts:["México","España","Argentina","Portugal"],ans:1,exp:"La tortilla española es un plato típico de España hecho con huevos y patatas."},
+    {q:"¿Qué es el wasabi?",opts:["Jengibre verde","Pasta picante japonesa de rábano picante","Salsa de soja","Alga marina"],ans:1,exp:"El wasabi es una pasta picante japonesa hecha de Wasabia japonica o rábano picante."},
+    {q:"¿De qué país es la fondue?",opts:["Francia","Austria","Suiza","Alemania"],ans:2,exp:"La fondue de queso es un plato tradicional suizo."},
+    {q:"¿Qué es el tahini?",opts:["Hummus árabe","Pasta de sésamo","Salsa de tomate","Aceite de oliva"],ans:1,exp:"El tahini es una pasta hecha de semillas de sésamo molidas."},
+    {q:"¿De qué país es el baklava?",opts:["Grecia","Turquía","Líbano","Todos comparten la tradición"],ans:3,exp:"El baklava es un postre compartido por muchas culturas del Mediterráneo oriental y Oriente Medio."},
+    {q:"¿Qué es la trufa?",opts:["Hongo subterráneo","Tipo de chocolate","Tubérculo tropical","Seta de árbol"],ans:0,exp:"La trufa es un hongo que crece bajo tierra, muy apreciado en gastronomía."},
+    {q:"¿De qué país es el ramen?",opts:["China (origen)","Japón","Corea","Vietnam"],ans:0,exp:"El ramen tiene origen chino pero se desarrolló en Japón, donde es plato nacional."},
+    {q:"¿Qué es el carpaccio?",opts:["Pasta italiana","Carne cruda cortada muy fina","Queso fresco","Salsa de tomate"],ans:1,exp:"El carpaccio es un plato de carne o pescado crudo cortado en láminas muy finas."},
+    {q:"¿De qué país es la paella de marisco?",opts:["España","Italia","Portugal","Grecia"],ans:0,exp:"La paella en todas sus variantes es originaria de España, especialmente de Valencia."},
+    {q:"¿Qué es el mole?",opts:["Salsa mexicana con chile y chocolate","Guiso español","Caldo japonés","Curry indio"],ans:0,exp:"El mole es una salsa mexicana compleja que puede incluir chocolate, chiles y decenas de ingredientes."},
+    {q:"¿Cuál es la especia más cara del mundo?",opts:["Azafrán","Vainilla","Cardamomo","Trufa negra"],ans:0,exp:"El azafrán puede costar más de 10.000 euros por kilo, siendo la especia más cara del mundo."},
+    {q:"¿Qué es el tempura?",opts:["Sopa japonesa","Rebozado japonés con masa ligera","Técnica de fermentación","Salsa de soja"],ans:1,exp:"El tempura es una técnica japonesa de rebozar y freír mariscos y verduras en masa ligera."},
+    {q:"¿De qué país es el tzatziki?",opts:["Turquía","Grecia","Bulgaria","Líbano"],ans:1,exp:"El tzatziki es una salsa griega de yogur, pepino y ajo."},
+    {q:"¿Qué es el chorizo?",opts:["Embutido de cerdo español","Solo salchicha italiana","Embutido alemán","Cualquier embutido"],ans:0,exp:"El chorizo es un embutido curado español hecho de carne de cerdo picada con pimentón."},
+    {q:"¿De qué país es el falafel?",opts:["Israel","Egipto (origen más probable)","Líbano","Siria"],ans:1,exp:"El falafel se origina probablemente en Egipto, aunque es popular en todo Oriente Medio."},
+    {q:"¿Qué es el ceviche?",opts:["Sopa peruana","Pescado marinado en limón","Parrilla argentina","Guiso boliviano"],ans:1,exp:"El ceviche es un plato latinoamericano de pescado marinado en jugo de limón."},
+    {q:"¿De qué país es el strudel?",opts:["Alemania","Suiza","Austria","Hungría"],ans:2,exp:"El Apfelstrudel (strudel de manzana) es el postre más icónico de la cocina austriaca."},
+    {q:"¿Qué es el prosciutto?",opts:["Queso italiano","Jamón curado italiano","Pasta italiana","Embutido de buey"],ans:1,exp:"El prosciutto es un jamón curado italiano, el más famoso el de Parma."},
+    {q:"¿De qué país son los tacos?",opts:["España","Estados Unidos","México","Guatemala"],ans:2,exp:"Los tacos son un plato tradicional mexicano."},
+    {q:"¿Qué es la quinoa?",opts:["Cereal sudamericano","Solo una moda alimentaria","Legumbre africana","Tubérculo andino"],ans:0,exp:"La quinoa es un pseudocereal de los Andes, rico en proteínas y amino ácidos esenciales."},
+    {q:"¿De qué país es el currywurst?",opts:["Austria","Suiza","Alemania","Países Bajos"],ans:2,exp:"El currywurst es un plato típico alemán, especialmente popular en Berlín."},
+    {q:"¿Qué es la bechamel?",opts:["Salsa española de tomate","Salsa blanca francesa de mantequilla y leche","Sopa italiana","Crema belga"],ans:1,exp:"La bechamel es una salsa básica de la cocina francesa hecha con mantequilla, harina y leche."},
+    {q:"¿De qué país es el goulash?",opts:["Rumanía","Polonia","Hungría","Austria"],ans:2,exp:"El goulash es un estofado tradicional húngaro condimentado con pimentón."},
+    {q:"¿Qué es el açaí?",opts:["Fruta tropical africana","Baya amazónica","Raíz asiática","Alga marina"],ans:1,exp:"El açaí es una baya del palmito de Brasil, muy popular como superalimento."},
+    {q:"¿De qué país es el pad thai?",opts:["Vietnam","Indonesia","Tailandia","Camboya"],ans:2,exp:"El pad thai es un plato de fideos salteados tailandés."},
+    {q:"¿Qué es el manchego?",opts:["Queso español de oveja","Vino manchego","Embutido español","Aceite de La Mancha"],ans:0,exp:"El queso manchego es un queso DOP español elaborado con leche de oveja manchega."},
+    {q:"¿De qué país es la quiche?",opts:["Bélgica","Suiza","Alemania","Francia"],ans:3,exp:"La quiche es un pastel salado francés, la más famosa la Quiche Lorraine."},
+    {q:"¿Qué es la mortadela?",opts:["Queso italiano","Embutido italiano con pistachos","Salsa italiana","Pasta italiana"],ans:1,exp:"La mortadela es un embutido de Bolonia, Italia, con trozos de grasa y pistachos."},
+    {q:"¿De qué país es la empanada?",opts:["Solo de Argentina","Solo de España","De origen español, adoptada en Latinoamérica","De México"],ans:2,exp:"La empanada tiene origen en España y se extendió por toda Latinoamérica."},
+    {q:"¿Qué es el soufflé?",opts:["Caldo francés","Preparación esponjosa francesa horneada","Mousse helado","Crema catalana"],ans:1,exp:"El soufflé es una preparación francesa ligera y esponjosa, dulce o salada."},
+    {q:"¿De qué país es el tiramisu?",opts:["Francia","Italia","España","Austria"],ans:1,exp:"El tiramisú es un postre italiano originario de Venecia o Treviso."},
+    {q:"¿Qué es el hummus?",opts:["Arroz árabe","Pasta de garbanzos","Carne picada","Ensalada mediterránea"],ans:1,exp:"El hummus es una pasta de garbanzos cocidos con tahini, limón y ajo."},
+    {q:"¿De qué país es el bibimbap?",opts:["China","Japón","Vietnam","Corea"],ans:3,exp:"El bibimbap es un plato coreano de arroz con vegetales, carne y huevo."},
+    {q:"¿Qué es el pho?",opts:["Sopa vietnamita","Curry tailandés","Dumplings chinos","Fideos japoneses"],ans:0,exp:"El pho es una sopa vietnamita con caldo, fideos de arroz y carne."},
+    {q:"¿De qué país es el döner kebab?",opts:["Grecia","Persia","Arabia Saudí","Turquía"],ans:3,exp:"El döner kebab es originario de Turquía, aunque se hizo popular en Alemania."},
+    {q:"¿Qué es el sake?",opts:["Vino de ciruela","Licor de arroz japonés","Cerveza de trigo","Bebida de soja"],ans:1,exp:"El sake es una bebida alcohólica japonesa elaborada por fermentación del arroz."},
+    {q:"¿De qué país son los pierogi?",opts:["Rusia","Ucrania","Polonia","República Checa"],ans:2,exp:"Los pierogi son empanadillas polacas rellenas de patata, queso, carne u otros ingredientes."},
+  ],
+  mitologia: [
+    {q:"¿Quién era el dios del trueno en la mitología griega?",opts:["Ares","Poseidón","Zeus","Apolo"],ans:2,exp:"Zeus era el dios del trueno y rey de los dioses en la mitología griega."},
+    {q:"¿Qué era el laberinto del Minotauro?",opts:["Prisión de Creta","Templo de Atenea","Palacio de Zeus","Tumba de Minos"],ans:0,exp:"El laberinto fue construido por Dédalo en Creta para encerrar al Minotauro."},
+    {q:"¿Quién era Odiseo?",opts:["Rey de Esparta","Rey de Troya","Rey de Ítaca","Héroe de Tebas"],ans:2,exp:"Odiseo (Ulises en latín) era el rey de Ítaca, héroe de La Odisea de Homero."},
+    {q:"¿Qué era Excalibur?",opts:["Escudo mágico","Espada del rey Arturo","Lanza de Lanzarote","Armadura encantada"],ans:1,exp:"Excalibur era la espada mágica del legendario rey Arturo de Gran Bretaña."},
+    {q:"¿Quién era el dios del amor en la mitología romana?",opts:["Venus","Marte","Cupido","Mercurio"],ans:2,exp:"Cupido era el dios romano del amor, equivalente al griego Eros."},
+    {q:"¿Qué fue la caja de Pandora?",opts:["Tesoro de los dioses","Recipiente que contenía todos los males del mundo","Regalo de Zeus a los hombres","Arma de Atenea"],ans:1,exp:"La caja de Pandora contenía todos los males del mundo que se liberaron al abrirla."},
+    {q:"¿Quién era Thor en la mitología nórdica?",opts:["Dios del viento","Dios del trueno","Dios de la guerra","Dios del invierno"],ans:1,exp:"Thor era el dios nórdico del trueno, hijo de Odín, portador del martillo Mjolnir."},
+    {q:"¿Qué era el Olimpo?",opts:["Mar griego","Ciudad de los héroes","Morada de los dioses griegos","Templo principal"],ans:2,exp:"El monte Olimpo era la morada de los dioses griegos en la mitología."},
+    {q:"¿Quién era Medusa?",opts:["Diosa del mar","Gorgona con cabellos de serpiente","Titán primordial","Diosa de la luna"],ans:1,exp:"Medusa era una gorgona cuya mirada convertía en piedra a quien la mirara."},
+    {q:"¿Qué era el Minotauro?",opts:["Dios griego","Criatura mitad hombre mitad toro","Monstruo marino","Gigante de piedra"],ans:1,exp:"El Minotauro era una criatura mitológica con cuerpo de hombre y cabeza de toro."},
+    {q:"¿Quién era Atenea en la mitología griega?",opts:["Diosa del amor","Diosa de la guerra y la sabiduría","Diosa de la luna","Diosa de la agricultura"],ans:1,exp:"Atenea era la diosa de la sabiduría, la guerra y las artes, patrona de Atenas."},
+    {q:"¿Qué era el talón de Aquiles?",opts:["Su lanza","Su armadura","Su único punto vulnerable","Su escudo"],ans:2,exp:"El talón de Aquiles era su único punto vulnerable, ya que su madre lo sostuvo por ahí al bañarlo."},
+    {q:"¿Quién era Loki en la mitología nórdica?",opts:["Dios de la guerra","Dios del engaño y la travesura","Dios del fuego","Gigante del hielo"],ans:1,exp:"Loki era el dios nórdico del engaño, conocido por sus travesuras y transformaciones."},
+    {q:"¿Qué era el vellón de oro?",opts:["Armadura mágica","Piel de carnero dorada de Colcos","Corona de los dioses","Tesoro de Troya"],ans:1,exp:"El vellocino de oro era la piel de un carnero alado que Jasón fue a buscar con los Argonautas."},
+    {q:"¿Quién era Poseidón?",opts:["Dios del cielo","Dios del fuego","Dios del mar","Dios del inframundo"],ans:2,exp:"Poseidón era el dios griego del mar, los terremotos y los caballos."},
+    {q:"¿Qué era el Ragnarok en la mitología nórdica?",opts:["Paraíso nórdico","El fin del mundo y de los dioses","Festival de los dioses","Primera batalla de los dioses"],ans:1,exp:"El Ragnarok es el apocalipsis de la mitología nórdica, donde los dioses y el mundo son destruidos."},
+    {q:"¿Quién era Hermes?",opts:["Dios de la guerra","Mensajero de los dioses","Dios del sol","Dios del mar"],ans:1,exp:"Hermes era el mensajero de los dioses griegos y también dios del comercio y los viajeros."},
+    {q:"¿Qué era el Olimpo para los dioses griegos?",opts:["Su templo principal","La cima del monte más alto de Grecia","Su paraíso tras la muerte","El trono de Zeus"],ans:1,exp:"El Olimpo era la cima del monte más alto de Grecia donde vivían los dioses."},
+    {q:"¿Quién era el dios egipcio de los muertos?",opts:["Ra","Horus","Osiris","Anubis"],ans:2,exp:"Osiris era el dios egipcio de los muertos, la resurrección y la fertilidad."},
+    {q:"¿Qué era el Edén?",opts:["Paraíso budista","Jardín del Génesis bíblico","Cielo nórdico","Monte sagrado griego"],ans:1,exp:"El Jardín del Edén es el paraíso descrito en el Génesis bíblico donde vivieron Adán y Eva."},
+    {q:"¿Quién era Afrodita?",opts:["Diosa de la guerra","Diosa del amor y la belleza","Diosa de la sabiduría","Diosa de la caza"],ans:1,exp:"Afrodita era la diosa griega del amor, la belleza y el deseo."},
+    {q:"¿Qué era el Nirvana en el budismo?",opts:["Paraíso físico","Estado de paz y liberación del sufrimiento","Dios budista","Ciclo de reencarnación"],ans:1,exp:"El Nirvana es el estado de paz absoluta y liberación del sufrimiento en el budismo."},
+    {q:"¿Quién era Hefesto?",opts:["Dios del fuego y la forja","Dios del viento","Dios de la guerra","Dios de los mares"],ans:0,exp:"Hefesto era el dios griego del fuego, la metalurgia y los artesanos."},
+    {q:"¿Qué era el Valhalla?",opts:["Infierno nórdico","Paraíso de los guerreros nórdicos","Morada de los gigantes","Mundo de los elfos"],ans:1,exp:"El Valhalla era el paraíso de los guerreros caídos en batalla en la mitología nórdica."},
+    {q:"¿Quién era Isis en la mitología egipcia?",opts:["Diosa de la guerra","Diosa de la magia y la maternidad","Diosa del sol","Diosa de la muerte"],ans:1,exp:"Isis era la diosa egipcia de la magia, la maternidad y la fertilidad."},
+    {q:"¿Qué era el Fénix?",opts:["Dios del fuego","Ave mítica que resurge de sus cenizas","Dragón europeo","Espíritu del viento"],ans:1,exp:"El Fénix es un ave mitológica que muere en llamas y renace de sus propias cenizas."},
+    {q:"¿Quién era Ares en la mitología griega?",opts:["Dios del mar","Dios de la sabiduría","Dios de la guerra","Dios del sol"],ans:2,exp:"Ares era el dios griego de la guerra y la violencia."},
+    {q:"¿Qué era el Minotauro y dónde vivía?",opts:["Monstruo del mar Egeo","Criatura en el laberinto de Creta","Guardián del Olimpo","Monstruo de la Odisea"],ans:1,exp:"El Minotauro era una criatura mitad hombre mitad toro que vivía en el laberinto de Creta."},
+    {q:"¿Quién era Odín en la mitología nórdica?",opts:["Dios del trueno","Padre de todos los dioses","Dios del mar","Dios del fuego"],ans:1,exp:"Odín era el padre de los dioses nórdicos, dios de la sabiduría, la guerra y la muerte."},
+    {q:"¿Qué era Pegaso?",opts:["Dios de los caballos","Caballo alado mitológico","Constelación griega","Dragón marino"],ans:1,exp:"Pegaso era el caballo alado de la mitología griega, nacido de la sangre de Medusa."},
+    {q:"¿Quién era Apolo?",opts:["Dios del mar","Dios del sol, la música y la profecía","Dios del amor","Dios del inframundo"],ans:1,exp:"Apolo era el dios griego del sol, la música, la profecía, la curación y las artes."},
+    {q:"¿Qué era el Hades?",opts:["Solo un dios","El inframundo y su dios","Un monstruo griego","Un héroe"],ans:1,exp:"Hades era tanto el dios del inframundo como el propio reino de los muertos en la mitología griega."},
+    {q:"¿Quién era Sísifo?",opts:["Héroe griego","Rey condenado a empujar eternamente una roca cuesta arriba","Dios menor del Olimpo","Monstruo del inframundo"],ans:1,exp:"Sísifo fue condenado eternamente a empujar una roca hasta la cima de una montaña, desde donde volvía a caer."},
+    {q:"¿Qué era la Hidra?",opts:["Dragón de una cabeza","Serpiente de múltiples cabezas","Monstruo marino","Criatura del inframundo"],ans:1,exp:"La Hidra era una serpiente acuática con múltiples cabezas que volvían a crecer si se cortaban."},
+    {q:"¿Quién era Prometeo?",opts:["Rey de los dioses","Titán que robó el fuego para los humanos","Héroe de Troya","Dios de la sabiduría"],ans:1,exp:"Prometeo fue el titán que robó el fuego a los dioses para dárselo a los humanos."},
+    {q:"¿Qué era el néctar en la mitología griega?",opts:["Veneno divino","Bebida de los dioses que daba inmortalidad","Agua sagrada del Olimpo","Miel de los dioses"],ans:1,exp:"El néctar era la bebida de los dioses griegos que otorgaba la inmortalidad."},
+    {q:"¿Quién era Narciso en la mitología griega?",opts:["Dios de los ríos","Joven enamorado de su propio reflejo","Héroe de la guerra de Troya","Hijo de Zeus"],ans:1,exp:"Narciso era un joven tan hermoso que se enamoró de su propio reflejo en el agua."},
+    {q:"¿Qué era el laberinto en la mitología griega?",opts:["Prisión de los dioses","Construcción de Dédalo para encerrar al Minotauro","Templo de poseidón","Ciudad perdida"],ans:1,exp:"El laberinto fue construido por el arquitecto Dédalo para el rey Minos de Creta."},
+    {q:"¿Quién era Ícaro?",opts:["Hijo de Poseidón","Hijo de Dédalo que voló demasiado cerca del sol","Héroe troyano","Dios menor griego"],ans:1,exp:"Ícaro era el hijo de Dédalo que voló con alas de cera y plumas demasiado cerca del sol."},
+    {q:"¿Qué era el Olimpo en términos geográficos?",opts:["Isla griega","Monte más alto de Grecia","Ciudad sagrada","Templo principal"],ans:1,exp:"El Monte Olimpo es la montaña más alta de Grecia, con 2.918 metros."},
+    {q:"¿Quién era Dioniso?",opts:["Dios del vino y la fiesta","Dios del fuego","Dios del cielo","Dios de la guerra"],ans:0,exp:"Dioniso era el dios griego del vino, la fiesta, el teatro y el éxtasis."},
+    {q:"¿Qué era el Mahabharata?",opts:["Texto sagrado budista","Epopeya hindú","Mitología china","Historia de los dioses egipcios"],ans:1,exp:"El Mahabharata es una de las dos grandes epopeyas del Hinduismo, con más de 200.000 versos."},
+    {q:"¿Quién era Set en la mitología egipcia?",opts:["Dios del sol","Dios del caos y la tormenta","Dios de la muerte","Dios de la sabiduría"],ans:1,exp:"Set era el dios egipcio del caos, la tormenta, el desierto y la violencia."},
+    {q:"¿Qué era Mjolnir?",opts:["Escudo de Odín","Martillo de Thor","Lanza de Freyr","Espada de Tyr"],ans:1,exp:"Mjolnir era el poderoso martillo del dios nórdico Thor."},
+    {q:"¿Quién era Hera?",opts:["Diosa del amor","Diosa del fuego","Esposa de Zeus y diosa del matrimonio","Diosa de la sabiduría"],ans:2,exp:"Hera era la esposa de Zeus y la diosa griega del matrimonio y la familia."},
+    {q:"¿Qué era el Tártaro?",opts:["Paraíso griego","Las profundidades más oscuras del inframundo griego","Montaña sagrada","Océano primordial"],ans:1,exp:"El Tártaro era la parte más profunda del inframundo griego, donde se castigaba a los peores criminales."},
+    {q:"¿Quién era Poseidón?",opts:["Dios del fuego","Dios del mar y los terremotos","Dios del inframundo","Dios del viento"],ans:1,exp:"Poseidón era el dios griego del mar, los terremotos y los caballos, hermano de Zeus."},
+    {q:"¿Qué era la ambrosía?",opts:["Veneno de los dioses","Alimento de los dioses que daba inmortalidad","Perfume divino","Bebida mágica de los héroes"],ans:1,exp:"La ambrosía era el alimento de los dioses griegos que les otorgaba la inmortalidad."},
+    {q:"¿Quién era Quetzalcóatl?",opts:["Dios inca del sol","Dios azteca con forma de serpiente emplumada","Rey maya","Héroe tolteca"],ans:1,exp:"Quetzalcóatl era la Serpiente Emplumada, uno de los dioses más importantes de las culturas mesoamericanas."},
+    {q:"¿Qué era el Ragnarok y cuándo ocurriría?",opts:["Al final del verano","Al final de los tiempos, con el último invierno","Cada 100 años","Tras la muerte de Odín"],ans:1,exp:"El Ragnarok es el apocalipsis nórdico que ocurrirá al final de los tiempos, precedido por el Fimbulwinter."},
+    {q:"¿Quién era Artemisa?",opts:["Diosa del amor","Diosa del sol","Diosa de la caza y la luna","Diosa de la guerra"],ans:2,exp:"Artemisa era la diosa griega de la caza, la luna y las mujeres."},
+    {q:"¿Qué era el Elíseo o Campos Elíseos?",opts:["Ciudad de los dioses","Paraíso de los héroes y virtuosos en el inframundo griego","Lugar de juicio de los muertos","Monte sagrado"],ans:1,exp:"Los Campos Elíseos eran el paraíso en el inframundo griego donde residían los héroes y virtuosos."},
+  ]
+};
+
 let questions=[], currentQ=0, score=0, correctCount=0;
 let totalTime=0, timerInterval=null, timeLeft=20;
 let questionStartTime=0, answered=false;
-let selectedCategory='Cultura General';
+let selectedCategory='general';
 let username = localStorage.getItem('brainora_username') || '';
+const usedQ = {};
+
 loadStats(); initUsername(); updateRankingDate();
+
 document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); selectedCategory = btn.dataset.cat;
+    btn.classList.add('active');
+    selectedCategory = btn.dataset.cat;
   });
 });
+
 function initUsername() {
   if (username) {
     document.getElementById('username-input-row').style.display = 'none';
@@ -261,32 +903,29 @@ function changeUsername() {
   document.getElementById('username-saved-row').style.display = 'none';
   document.getElementById('username-input').value = username;
 }
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if (id === 'screen-ranking') loadRanking('global');
 }
-async function startQuiz() {
+
+function startQuiz() {
   if (!username) { showToast('Escribe tu nombre antes de jugar'); return; }
-  showScreen('screen-loading');
-  try {
-    const resp = await fetch(`${API_URL}/preguntas`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ categoria: selectedCategory })
-    });
-    if (!resp.ok) throw new Error('Error del servidor');
-    const data = await resp.json();
-    if (!data.preguntas || data.preguntas.length < 5) throw new Error('Preguntas insuficientes');
-    questions = data.preguntas;
-    currentQ=0; score=0; correctCount=0; totalTime=0;
-    document.getElementById('score-live').textContent = '0 pts';
-    showScreen('screen-quiz'); showQuestion();
-  } catch(e) {
-    showScreen('screen-home');
-    showToast('Error: ' + (e.message || 'Inténtalo de nuevo'));
-  }
+  const pool = DB[selectedCategory] || DB.general;
+  if (!usedQ[selectedCategory]) usedQ[selectedCategory] = new Set();
+  const used = usedQ[selectedCategory];
+  let available = pool.filter((_, i) => !used.has(i));
+  if (available.length < 10) { used.clear(); available = [...pool]; }
+  const shuffled = [...available].sort(() => Math.random() - 0.5);
+  questions = shuffled.slice(0, 10);
+  questions.forEach(q => { const i = pool.indexOf(q); used.add(i); });
+  currentQ=0; score=0; correctCount=0; totalTime=0;
+  document.getElementById('score-live').textContent = '0 pts';
+  showScreen('screen-quiz');
+  showQuestion();
 }
+
 function showQuestion() {
   clearInterval(timerInterval); answered = false;
   const q = questions[currentQ];
@@ -311,6 +950,7 @@ function showQuestion() {
     if (timeLeft <= 0) { clearInterval(timerInterval); selectAnswer(-1, null); }
   }, 1000);
 }
+
 function updateTimer() {
   document.getElementById('timer-num').textContent = timeLeft;
   const fill = document.getElementById('timer-fill');
@@ -318,6 +958,7 @@ function updateTimer() {
   fill.style.width = (timeLeft/20*100)+'%'; fill.style.background = c;
   document.getElementById('timer-num').style.color = c;
 }
+
 function selectAnswer(idx, btn) {
   if (answered) return; answered = true; clearInterval(timerInterval);
   totalTime += Math.min(Math.round((Date.now()-questionStartTime)/1000), 20);
@@ -337,6 +978,7 @@ function selectAnswer(idx, btn) {
   }
   setTimeout(() => { currentQ++; if (currentQ < questions.length) showQuestion(); else showResults(); }, q.exp ? 2200 : 1400);
 }
+
 async function showResults() {
   document.getElementById('res-score').textContent = score;
   document.getElementById('res-correct').textContent = correctCount + '/10';
@@ -352,9 +994,10 @@ async function showResults() {
     const resp = await fetch(`${API_URL}/ranking`);
     const data = await resp.json();
     const pos = data.ranking.findIndex(r => r.username === username && r.puntos === score) + 1;
-    document.getElementById('res-rank').textContent = pos > 0 ? '#' + pos : '#' + data.ranking.length;
+    document.getElementById('res-rank').textContent = pos > 0 ? '#' + pos : '#—';
   } catch(e) { document.getElementById('res-rank').textContent = '#—'; }
 }
+
 function saveLocal() {
   const today = new Date().toISOString().split('T')[0];
   const history = JSON.parse(localStorage.getItem('brainora_history') || '[]');
@@ -363,6 +1006,7 @@ function saveLocal() {
   if (score > parseInt(localStorage.getItem('brainora_best') || '0')) localStorage.setItem('brainora_best', score);
   updateStreak(today); loadStats();
 }
+
 function updateStreak(today) {
   const dates = [...new Set(JSON.parse(localStorage.getItem('brainora_history')||'[]').map(h=>h.date))].sort().reverse();
   let streak=0, check=today;
@@ -372,10 +1016,12 @@ function updateStreak(today) {
   }
   localStorage.setItem('brainora_streak', streak);
 }
+
 function loadStats() {
   document.getElementById('stat-streak').textContent = '🔥 ' + (localStorage.getItem('brainora_streak') || '0');
   document.getElementById('stat-best').textContent = localStorage.getItem('brainora_best') || '0';
 }
+
 async function loadRanking(tab) {
   const list = document.getElementById('rank-list');
   list.innerHTML = '<div class="rank-empty">Cargando...</div>';
@@ -398,20 +1044,24 @@ async function loadRanking(tab) {
       </div>`).join('');
   } catch(e) { list.innerHTML = '<div class="rank-empty">Error cargando ranking</div>'; }
 }
+
 function switchTab(tab, el) {
   document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
   el.classList.add('active'); loadRanking(tab);
 }
+
 function updateRankingDate() {
   document.getElementById('ranking-date').textContent =
     'Hoy — ' + new Date().toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
 }
+
 function shareResult() {
   const emojis = Array.from({length:10}, (_,i) => i<correctCount ? '🟨' : '⬜').join('');
   const text = `Brainora ${new Date().toLocaleDateString('es-ES')}\n${score} pts · ${correctCount}/10 ✓\n${emojis}\n¡Pon tu mente a prueba!`;
   if (navigator.share) navigator.share({text}).catch(()=>{});
   else navigator.clipboard?.writeText(text).then(() => showToast('📋 Copiado'));
 }
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
